@@ -1,14 +1,14 @@
 "use client";
 
 import React from "react";
-import { motion } from "framer-motion";
+import { motion, Variants } from "framer-motion";
 import { TypeAnimation } from "react-type-animation";
 import { Github, Linkedin } from "lucide-react";
 import Image from "next/image";
 import CommonButton from "../components/CommonButton";
 import MyPhoto from "../public/MyPhoto.png";
 
-const containerVariants = {
+const containerVariants: Variants = {
   hidden: { opacity: 0 },
   visible: {
     opacity: 1,
@@ -16,7 +16,7 @@ const containerVariants = {
   },
 };
 
-const itemVariants = {
+const itemVariants: Variants = {
   hidden: { opacity: 0, y: 30 },
   visible: {
     opacity: 1,
@@ -118,21 +118,20 @@ const Hero = () => {
           </motion.div>
         </div>
 
-        {/* Right Content (Image) 
+        {/* Right Content (Image) */}
         <motion.div
           variants={itemVariants}
           className="order-1 lg:order-2 flex justify-center lg:justify-end"
         >
-          {/* */}
           <div className="relative w-[280px] h-[350px] md:w-[350px] md:h-[450px] group">
-            <div className="relative w-full h-full  bg-slate-200 dark:bg-slate-800 rounded-[2.5rem] overflow-hidden shadow-2xl transition-all duration-700 group-hover:rounded-[3.5rem]">
+            <div className="relative w-full h-full bg-slate-200 dark:bg-slate-800 rounded-[2.5rem] overflow-hidden shadow-2xl transition-all duration-700 group-hover:rounded-[3.5rem]">
               <Image
                 src={MyPhoto}
                 alt="Mostakim"
                 fill
-                priority 
+                priority
                 sizes="(max-width: 768px) 100vw, 350px"
-                className="object-cover pt-2 grayscale group-hover:grayscale-0 transition-all duration-1000 scale-105"
+                className="object-cover grayscale group-hover:grayscale-0 transition-all duration-1000 scale-105"
               />
             </div>
           </div>
@@ -143,3 +142,4 @@ const Hero = () => {
 };
 
 export default Hero;
+
