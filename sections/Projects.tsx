@@ -2,9 +2,9 @@
 
 import React from "react";
 import { motion } from "framer-motion";
-import Image from "next/image"; // Next.js ইমেজ অপ্টিমাইজেশন
+import Image from "next/image";
+import { ExternalLink, Github } from "lucide-react";
 
-// ইন্টারফেস ডিফাইন করলাম (ভালো প্র্যাকটিস)
 interface Project {
   image: string;
   title: string;
@@ -18,42 +18,45 @@ export const PROJECT_DATA: Project[] = [
     image: "/Projects Img/CSTicketSystem.png",
     title: "CS Ticket System",
     description:
-      "A comprehensive real-time support ticketing system featuring live analytics and automated management.",
+      "A comprehensive real-time support ticketing system featuring live analytics, automated management, and user authentication for seamless tracking.",
     techStack: ["React", "Tailwind", "Firebase"],
-    links: { live: "https://friendly-crepe-f0261b.netlify.app", github: "#" },
+    links: { live: "https://friendly-crepe-f0261b.netlify.app" }
   },
   {
     image: "/Projects Img/GamingHub.png",
     title: "Gaming Hub",
     description:
-      "An immersive gaming platform integrating multiple APIs for real-time stats and community ratings.",
+      "An immersive gaming platform integrating multiple APIs for real-time stats, global leaderboards, and community-driven game ratings.",
     techStack: ["React", "Tailwind", "JS"],
     links: {
-      live: "https://transcendent-haupia-e0ed5a.netlify.app",
-      github: "#",
+      live: "https://transcendent-haupia-e0ed5a.netlify.app"
     },
   },
   {
     image: "/Projects Img/AIModelMarketplace.png",
     title: "AI Marketplace",
     description:
-      "A sophisticated platform to discover, purchase, and deploy custom AI models with secure transactions.",
-    techStack: ["React", "Tailwind CSS", "Firebase", "MongoDB"],
-    links: { live: "https://dulcet-fox-ad01e1.netlify.app/app", github: "#" },
+      "A sophisticated platform to discover, purchase, and deploy custom AI models with secure transaction gateways and user profiles.",
+    techStack: ["React", "Tailwind", "Firebase", "MongoDB"],
+    links: { live: "https://dulcet-fox-ad01e1.netlify.app/app" },
   },
 ];
 
 const Projects = () => {
   return (
-    <section id="projects" className="py-24 bg-base-100">
-      <div className="max-w-7xl mx-auto px-6">
-        <div className="mb-16">
+    <section
+      id="projects"
+      className="py-16 md:py-24 bg-white dark:bg-slate-950 transition-colors duration-500"
+    >
+      <div className="max-w-7xl mx-auto px-6 md:px-12 lg:px-24">
+        <div className="mb-12 md:mb-16">
           <motion.h2
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
-            className="text-5xl md:text-7xl font-black tracking-tighter"
+            viewport={{ once: true }}
+            className="text-4xl md:text-5xl font-black text-center tracking-tighter text-brand-darkest dark:text-white italic"
           >
-            My <span className="text-primary italic">Projects.</span>
+            My <span className="text-brand-medium not-italic">Projects</span>
           </motion.h2>
         </div>
 
@@ -63,56 +66,58 @@ const Projects = () => {
               key={index}
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
-              transition={{ delay: index * 0.1 }}
               viewport={{ once: true }}
-              className="group relative h-[500px] bg-base-200 rounded-[2.5rem] overflow-hidden border border-base-content/5 transition-all duration-500 hover:border-primary/30"
+              transition={{ delay: index * 0.1, duration: 0.5 }}
+              className="group relative h-[400px] rounded-[2.5rem] overflow-hidden border border-brand-light/20 shadow-lg"
             >
-              {/* Image Section */}
-              <div className="h-[250px] w-full relative overflow-hidden">
-                <Image
-                  src={project.image}
-                  alt={project.title}
-                  fill
-                  className="object-cover transition-transform duration-700 group-hover:scale-110"
-                />
-              </div>
+              {/* Background Image */}
+              <Image
+                src={project.image}
+                alt={project.title}
+                fill
+                className="object-cover transition-transform duration-700 group-hover:scale-105"
+              />
 
-              {/* Static Content */}
-              <div className="p-8 h-[250px] flex flex-col justify-between">
-                <div>
-                  <h3 className="text-2xl font-bold mb-3 tracking-tight">
-                    {project.title}
-                  </h3>
-                  <p className="text-[12px] opacity-60 leading-relaxed line-clamp-3">
-                    {project.description}
-                  </p>
-                </div>
-                <div className="flex flex-wrap gap-2">
+              {/* Hover Overlay */}
+              <div className="absolute inset-0 bg-brand-darkest/90 backdrop-blur-sm opacity-0 group-hover:opacity-100 transition-opacity duration-500 p-8 flex flex-col justify-center items-center text-center">
+                <h3 className="text-xl font-black text-white mb-4">
+                  {project.title}
+                </h3>
+                <p className="text-xs text-slate-200 leading-relaxed mb-6">
+                  {project.description}
+                </p>
+
+                {/* Tech Stack in Overlay */}
+                <div className="flex flex-wrap justify-center gap-2 mb-8">
                   {project.techStack.map((tech, i) => (
                     <span
                       key={i}
-                      className="text-[9px] font-bold uppercase px-3 py-1 bg-base-300 rounded-full"
+                      className="text-[9px] font-bold uppercase px-3 py-1 bg-white/10 text-white rounded-full"
                     >
                       {tech}
                     </span>
                   ))}
                 </div>
-              </div>
 
-              {/* Hover Overlay */}
-              <div className="absolute inset-0 bg-primary/95 opacity-0 group-hover:opacity-100 transition-opacity duration-500 p-8 flex flex-col justify-center text-white">
-                <h3 className="text-2xl font-bold mb-4">{project.title}</h3>
-                <p className="text-[13px] leading-relaxed mb-6 opacity-90">
-                  {project.description}
-                </p>
-                <a
-                  href={project.links.live}
-                  target="_blank"
-                  rel="noreferrer"
-                  className="py-3 bg-white text-primary text-center rounded-xl font-black uppercase text-[11px] hover:bg-white/90 transition-all"
-                >
-                  Live Demo
-                </a>
+                {/* Action Buttons */}
+                <div className="flex gap-4">
+                  <a
+                    href={project.links.live}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="flex items-center gap-2 px-6 py-3 bg-brand-medium text-white rounded-full text-xs font-black uppercase hover:bg-white hover:text-brand-medium transition-all"
+                  >
+                    <ExternalLink size={14} /> Live
+                  </a>
+                  <a
+                    href={project.links.github}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="flex items-center gap-2 px-6 py-3 bg-white/10 text-white rounded-full text-xs font-black uppercase hover:bg-white hover:text-brand-darkest transition-all"
+                  >
+                    <Github size={14} /> Code
+                  </a>
+                </div>
               </div>
             </motion.div>
           ))}

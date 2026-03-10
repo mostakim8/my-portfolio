@@ -1,71 +1,72 @@
-"use client"; // এটি অবশ্যই দিতে হবে
+"use client";
 
-import React, { useState } from "react";
+import React from "react";
 import { motion } from "framer-motion";
 import { TypeAnimation } from "react-type-animation";
 import { Github, Linkedin } from "lucide-react";
-import Image from "next/image"; // Next.js এর ইমেজ কম্পোনেন্ট
+import Image from "next/image";
 import CommonButton from "../components/CommonButton";
-import MyPhoto from "../public/icon.png"; // ইমেজটি 'public' ফোল্ডারে রাখলে এভাবে ইমপোর্ট হবে
+import MyPhoto from "../public/MyPhoto.png";
+
+const containerVariants = {
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: { staggerChildren: 0.2, delayChildren: 0.1 },
+  },
+};
+
+const itemVariants = {
+  hidden: { opacity: 0, y: 30 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: { duration: 0.8, ease: [0.22, 1, 0.36, 1] },
+  },
+};
 
 const Hero = () => {
-  const [showRemaining, setShowRemaining] = useState(false);
-
-  const fadeInUp = {
-    hidden: { opacity: 0, y: 30 },
-    visible: (customDelay: number) => ({
-      opacity: 1,
-      y: 0,
-      transition: {
-        duration: 0.8,
-        ease: [0.22, 1, 0.36, 1],
-        delay: customDelay,
-      },
-    }),
-  };
-
   return (
     <section
       id="home"
-      className="min-h-screen flex items-center justify-center px-6 lg:px-24 bg-base-100 relative overflow-hidden"
+      className="min-h-screen flex items-center pt-24 pb-16 px-6 md:px-12 lg:px-24 relative overflow-hidden bg-white dark:bg-slate-950 transition-colors duration-500"
     >
-      <div className="absolute top-1/4 -left-20 w-[400px] h-[400px] bg-[#0C7779]/10 blur-[120px] rounded-full -z-10 animate-pulse"></div>
+      {/* Background Decor */}
+      <div className="absolute top-0 right-0 w-[400px] h-[400px] md:w-[600px] md:h-[600px] bg-brand-medium/5 blur-[120px] rounded-full -z-10"></div>
 
-      <div className="max-w-6xl mx-auto w-full grid grid-cols-1 lg:grid-cols-2 gap-16 items-center z-10 pt-20">
-        <div>
+      <motion.div
+        variants={containerVariants}
+        initial="hidden"
+        animate="visible"
+        className="max-w-7xl mx-auto w-full grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-center"
+      >
+        {/* Left Content */}
+        <div className="order-2 lg:order-1 text-center lg:text-left">
           <motion.div
-            initial="hidden"
-            animate="visible"
-            variants={fadeInUp}
-            custom={0.1}
-            className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-[#0C7779]/10 text-[#0C7779] text-[10px] font-bold uppercase tracking-widest mb-6 border border-[#0C7779]/20"
+            variants={itemVariants}
+            className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-brand-medium/10 text-brand-medium text-[10px] font-black uppercase tracking-[0.2em] mb-6 border border-brand-medium/20"
           >
-            <span className="h-2 w-2 rounded-full bg-[#3BC1A8] animate-ping"></span>
+            <span className="h-2 w-2 rounded-full bg-brand-medium animate-ping"></span>
             Available for new challenges
           </motion.div>
 
           <motion.h1
-            initial="hidden"
-            animate="visible"
-            variants={fadeInUp}
-            custom={0.2}
-            className="text-6xl md:text-8xl font-black tracking-tighter leading-[0.9] mb-8"
+            variants={itemVariants}
+            className="text-5xl md:text-7xl lg:text-8xl font-black tracking-tighter leading-[0.9] mb-8 text-brand-darkest dark:text-white"
           >
             I am <br />{" "}
-            <span className="text-[#0C7779] italic font-serif">Mostakim</span>
+            <span className="text-brand-medium italic font-serif">
+              Mostakim
+            </span>
           </motion.h1>
 
           <motion.div
-            initial="hidden"
-            animate="visible"
-            variants={fadeInUp}
-            custom={0.3}
-            className="text-xl md:text-2xl font-medium text-base-content/70 mb-8 h-8"
+            variants={itemVariants}
+            className="text-base md:text-xl font-bold text-slate-600 dark:text-slate-400 mb-8 h-8"
           >
             <TypeAnimation
               sequence={[
                 "Frontend Developer.",
-                () => setShowRemaining(true),
                 2000,
                 "React & Next.js Specialist.",
                 2000,
@@ -76,60 +77,67 @@ const Hero = () => {
             />
           </motion.div>
 
-          <motion.p
-            initial="hidden"
-            animate={showRemaining ? "visible" : "hidden"}
-            variants={fadeInUp}
-            custom={0}
-            className="text-lg text-base-content/60 max-w-md mb-10 leading-relaxed"
-          >
-            Turning complex problems into elegant, high-performance web
-            experiences. Focused on precision, speed, and modern design.
-          </motion.p>
-
           <motion.div
-            initial="hidden"
-            animate={showRemaining ? "visible" : "hidden"}
-            variants={fadeInUp}
-            custom={0.2}
-            className="flex flex-wrap items-center gap-6"
+            variants={itemVariants}
+            className="flex flex-col items-center lg:items-start gap-8"
           >
-            <CommonButton
-              text="View Projects"
-              onClick={() =>
-                document.getElementById("projects")?.scrollIntoView({ behavior: "smooth" })
-              }
-            />
+            <p className="text-sm md:text-base text-slate-500 dark:text-slate-400 max-w-sm leading-relaxed">
+              Turning complex problems into elegant, high-performance web
+              experiences. Focused on precision, speed, and modern design.
+            </p>
 
-            <div className="flex items-center gap-6 border-l border-base-content/10 pl-6">
-              <a href="https://github.com/mostakim8" className="text-base-content/40 hover:text-[#0C7779] transition-colors">
-                <Github size={24} />
-              </a>
-              <a href="https://www.linkedin.com/in/all-mostakim/" className="text-base-content/40 hover:text-[#0C7779] transition-colors">
-                <Linkedin size={24} />
-              </a>
+            <div className="flex flex-wrap items-center justify-center lg:justify-start gap-6">
+              <CommonButton
+                text="View Projects"
+                onClick={() =>
+                  document
+                    .getElementById("projects")
+                    ?.scrollIntoView({ behavior: "smooth" })
+                }
+              />
+
+              <div className="flex items-center gap-6 border-l border-slate-200 dark:border-slate-800 pl-6">
+                <a
+                  href="https://github.com/mostakim8"
+                  target="_blank"
+                  rel="noreferrer"
+                  className="text-slate-400 hover:text-brand-medium transition-colors"
+                >
+                  <Github size={20} />
+                </a>
+                <a
+                  href="https://linkedin.com/in/all-mostakim/"
+                  target="_blank"
+                  rel="noreferrer"
+                  className="text-slate-400 hover:text-brand-medium transition-colors"
+                >
+                  <Linkedin size={20} />
+                </a>
+              </div>
             </div>
           </motion.div>
         </div>
 
+        {/* Right Content (Image) - এখানে পরিবর্তন করা হয়েছে */}
         <motion.div
-          className="relative flex justify-center lg:justify-end"
-          initial={{ opacity: 0, scale: 0.9 }}
-          animate={showRemaining ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0.9 }}
-          transition={{ duration: 0.8 }}
+          variants={itemVariants}
+          className="order-1 lg:order-2 flex justify-center lg:justify-end"
         >
-          <div className="relative w-full max-w-[400px] aspect-[4/5] group">
-            <div className="w-full h-full bg-[#0C7779]/20 overflow-hidden relative shadow-2xl transition-all duration-700 rounded-[2rem] group-hover:rounded-[3rem] group-hover:shadow-[#0C7779]/20 group-hover:shadow-2xl">
+          {/* কন্টেইনার সাইজ ফিক্স করা হলো */}
+          <div className="relative w-[280px] h-[350px] md:w-[350px] md:h-[450px] group">
+            <div className="relative w-full h-full  bg-slate-200 dark:bg-slate-800 rounded-[2.5rem] overflow-hidden shadow-2xl transition-all duration-700 group-hover:rounded-[3.5rem]">
               <Image
                 src={MyPhoto}
                 alt="Mostakim"
                 fill
-                className="object-cover grayscale transition-all duration-1000 group-hover:grayscale-0 scale-105"
+                priority // এটি ইমেজ দ্রুত লোড করবে
+                sizes="(max-width: 768px) 100vw, 350px"
+                className="object-cover pt-2 grayscale group-hover:grayscale-0 transition-all duration-1000 scale-105"
               />
             </div>
           </div>
         </motion.div>
-      </div>
+      </motion.div>
     </section>
   );
 };

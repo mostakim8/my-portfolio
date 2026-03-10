@@ -58,54 +58,55 @@ const SKILLS_DATA: any = {
   ],
 };
 
-const calculateExp = (date: string) => {
+const getExpDetails = (date: string) => {
   const start = new Date(date);
   const now = new Date();
-  const diff =
+  const diffMonths =
     (now.getFullYear() - start.getFullYear()) * 12 +
     (now.getMonth() - start.getMonth());
-  return diff < 1
-    ? `Fresh`
-    : diff < 12
-      ? `${diff} Mos`
-      : `${(diff / 12).toFixed(1)} Yrs`;
+
+  if (diffMonths < 5) return { label: "Fresh", color: "#64748b" };
+  if (diffMonths >= 5 && diffMonths < 12)
+    return { label: `${diffMonths} Mos`, color: "#f59e0b" };
+  if (diffMonths >= 12 && diffMonths < 36)
+    return { label: `${(diffMonths / 12).toFixed(1)} Yrs`, color: "#10b981" };
+  return { label: "3+ Yrs", color: "#e11d48" };
 };
 
 const SkillNode = ({ skill, index }: { skill: any; index: number }) => {
-  const colorMap: any = {
-    Expert: "#3b82f6",
-    Medium: "#10b981",
-    Basic: "#f59e0b",
-  };
-  const themeColor = colorMap[skill.level] || "#6366f1";
+  const exp = getExpDetails(skill.startDate);
 
   return (
     <motion.div
       initial={{ opacity: 0, scale: 0.8 }}
       animate={{ opacity: 1, scale: 1 }}
-      className="relative flex items-center justify-center group"
-      style={{ width: "160px", height: "160px" }}
+      className="relative flex items-center justify-center group shrink-0"
+      // মোবাইলে সাইজ ছোট এবং ডেস্কটপে বড়
+      style={{ width: "130px", height: "130px" }}
     >
       <motion.div
         animate={{ rotate: 360 }}
         transition={{ duration: 20 + index, repeat: Infinity, ease: "linear" }}
         className="absolute inset-0 border-2 rounded-[40%_60%_70%_30%]"
         style={{
-          borderColor: `${themeColor}66`,
-          backgroundColor: `${themeColor}05`,
+          borderColor: `${exp.color}66`,
+          backgroundColor: `${exp.color}05`,
         }}
       />
-      <div className="relative z-10 flex flex-col items-center text-center p-4">
+      <div className="relative z-10 flex flex-col items-center text-center p-2">
         <img
-          src={`https://cdn.simpleicons.org/${skill.icon}/${themeColor.replace("#", "")}`}
-          className="w-10 h-10 mb-2"
+          src={`https://cdn.simpleicons.org/${skill.icon}`}
+          className="w-8 h-8 mb-2 opacity-80"
           alt={skill.name}
         />
-        <h3 className="text-sm font-black uppercase tracking-tight">
+        <h3 className="text-[10px] md:text-sm font-black uppercase tracking-tight text-brand-darkest dark:text-white">
           {skill.name}
         </h3>
-        <span className="text-[8px] font-bold opacity-30 mt-1 uppercase tracking-widest">
-          {calculateExp(skill.startDate)}
+        <span
+          className="text-[8px] font-bold mt-0.5 uppercase tracking-widest"
+          style={{ color: exp.color }}
+        >
+          {exp.label}
         </span>
       </div>
     </motion.div>
@@ -118,33 +119,37 @@ const Skills = () => {
   return (
     <section
       id="skills"
-      className="py-20 bg-base-100 px-6 flex flex-col items-center overflow-hidden"
+      className="py-20 bg-white dark:bg-slate-950 px-6 transition-colors duration-500"
     >
-      <div className="max-w-7xl w-full">
-        <h2 className="text-6xl md:text-8xl font-black tracking-tighter uppercase text-center mb-16">
-          My <span className="text-primary italic font-serif">Skills</span>
+      <div className="max-w-6xl mx-auto w-full">
+        <h2 className="text-4xl md:text-5xl font-black tracking-tighter uppercase text-center mb-12 text-brand-darkest dark:text-white"> <span className="text-brand-medium italic font-serif">Skills</span>
         </h2>
 
-        <div className="flex justify-center gap-2 mb-16">
+        {/* Tab Buttons */}
+        <div className="flex flex-wrap justify-center gap-2 mb-12">
           {Object.keys(SKILLS_DATA).map((tab) => (
             <button
               key={tab}
               onClick={() => setActiveTab(tab)}
-              className={`px-6 py-2 rounded-full text-[10px] font-black uppercase tracking-widest transition-all ${activeTab === tab ? "bg-primary text-white" : "bg-base-200"}`}
+              className={`px-5 py-2 rounded-xl text-[10px] md:text-xs font-black uppercase tracking-widest transition-all ${
+                activeTab === tab
+                  ? "bg-brand-medium text-white shadow-lg shadow-brand-medium/20"
+                  : "bg-slate-100 dark:bg-slate-900 text-slate-500"
+              }`}
             >
               {tab}
             </button>
           ))}
         </div>
 
-        <motion.div
-          key={activeTab}
-          className="flex flex-wrap justify-center gap-16"
-        >
-          {SKILLS_DATA[activeTab].map((skill: any, index: number) => (
-            <SkillNode key={skill.name} skill={skill} index={index} />
-          ))}
-        </motion.div>
+        {/* Skill Nodes Grid */}
+        <div className="flex flex-wrap justify-center gap-6 md:gap-16">
+          <AnimatePresence mode="wait">
+            {SKILLS_DATA[activeTab].map((skill: any, index: number) => (
+              <SkillNode key={skill.name} skill={skill} index={index} />
+            ))}
+          </AnimatePresence>
+        </div>
       </div>
     </section>
   );

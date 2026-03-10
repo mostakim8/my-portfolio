@@ -1,6 +1,5 @@
 import React from "react";
 
-// টাইপস্ক্রিপ্ট ইন্টারফেস
 interface CommonButtonProps {
   text: string;
   onClick?: () => void;
@@ -19,11 +18,12 @@ const CommonButton: React.FC<CommonButtonProps> = ({
       type={type}
       onClick={onClick}
       className={`
-        px-[1.7em] py-[0.7em] text-[16px] font-bold rounded-[0.5em] 
+        px-8 py-3 text-sm font-black uppercase tracking-widest rounded-full 
         cursor-pointer transition-all duration-300 
-        bg-base-200 text-base-content border border-base-300 
-        shadow-[6px_6px_12px_rgba(0,0,0,0.1),-6px_-6px_12px_rgba(255,255,255,0.8)] 
-        hover:border-white active:shadow-[inset_4px_4px_12px_rgba(0,0,0,0.1),inset_-4px_-4px_12px_rgba(255,255,255,0.8)] 
+        bg-brand-medium text-white border border-brand-medium
+        hover:bg-brand-dark hover:border-brand-dark
+        shadow-lg shadow-brand-medium/20
+        active:scale-95
         ${className}
       `}
     >

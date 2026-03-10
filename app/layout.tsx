@@ -1,14 +1,11 @@
-import { Source_Sans_3, Geist } from "next/font/google";
+// app/layout.tsx
+import type { Metadata } from "next";
 import "./globals.css";
-import { cn } from "@/lib/utils";
 
-const geist = Geist({subsets:['latin'],variable:'--font-sans'});
-
-const sourceSans = Source_Sans_3({
-  subsets: ["latin"],
-  display: "swap",
-  variable: "--font-source-sans",
-});
+export const metadata: Metadata = {
+  title: "Mostakim | Portfolio",
+  description: "Frontend Web Developer Portfolio",
+};
 
 export default function RootLayout({
   children,
@@ -16,8 +13,10 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" className={cn(sourceSans.variable, "font-sans", geist.variable)}>
-      <body className="font-sans antialiased">{children}</body>
+    <html lang="en" className="dark" style={{ scrollBehavior: "smooth" }}>
+      <body className="antialiased selection:bg-brand-medium selection:text-white">
+        {children}
+      </body>
     </html>
   );
 }

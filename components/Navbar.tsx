@@ -1,62 +1,28 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import React, { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import {
   Menu,
   X,
-  Moon,
-  Sun,
   Home,
   User,
   Code2,
   Briefcase,
   Mail,
+  ArrowRight,
+  Download,
 } from "lucide-react";
 
 const Navbar = () => {
-  const [theme, setTheme] = useState("light");
   const [scrolled, setScrolled] = useState(false);
   const [activeSection, setActiveSection] = useState("home");
   const [isOpen, setIsOpen] = useState(false);
-
-  // থিম লোড করা
-  useEffect(() => {
-    const savedTheme = localStorage.getItem("theme") || "light";
-    setTheme(savedTheme);
-    document.documentElement.setAttribute("data-theme", savedTheme);
-  }, []);
-
-  // থিম টগল করা
-  const toggleTheme = () => {
-    const newTheme = theme === "light" ? "dark" : "light";
-    setTheme(newTheme);
-    localStorage.setItem("theme", newTheme);
-    document.documentElement.setAttribute("data-theme", newTheme);
-  };
 
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 20);
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
-
-  // সেকশন ট্র্যাকিং
-  useEffect(() => {
-    const sections = ["home", "about", "tech-stack", "projects", "contact"];
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) setActiveSection(entry.target.id);
-        });
-      },
-      { root: null, rootMargin: "-40% 0px -40% 0px", threshold: 0 },
-    );
-    sections.forEach((id) => {
-      const element = document.getElementById(id);
-      if (element) observer.observe(element);
-    });
-    return () => observer.disconnect();
   }, []);
 
   const navItems = [
@@ -73,88 +39,108 @@ const Navbar = () => {
       animate={{ y: 0 }}
       className={`fixed top-0 w-full z-[60] transition-all duration-500 ${
         scrolled
-          ? "py-4 bg-base-100/80 backdrop-blur-2xl shadow-xl border-b border-[#0C7779]/10"
+          ? "py-4 bg-white/80 dark:bg-slate-950/80 backdrop-blur-lg border-b border-slate-200 dark:border-slate-800"
           : "py-6 bg-transparent"
       }`}
     >
       <div className="max-w-7xl mx-auto px-6 flex justify-between items-center">
         {/* Logo */}
-        <a href="#home" className="text-xl font-black tracking-tighter">
-          MOSTAKIM<span className="text-[#0C7779] italic">.dev</span>
+        <a
+          href="#home"
+          className="text-xl font-black tracking-tighter text-brand-darkest dark:text-white"
+        >
+          MOSTAKIM<span className="text-brand-medium italic">.dev</span>
         </a>
 
         {/* Desktop Nav */}
         <ul className="hidden lg:flex gap-8 text-[11px] font-black uppercase tracking-[0.2em]">
           {navItems.map((item) => (
-            <li key={item.id} className="relative group">
+            <li key={item.id}>
               <a
                 href={`#${item.id}`}
-                className={`flex items-center gap-2 transition-all duration-300 ${
+                onClick={() => setActiveSection(item.id)}
+                className={`flex items-center gap-2 transition-colors ${
                   activeSection === item.id
-                    ? "text-[#0C7779]"
-                    : "text-base-content opacity-50 hover:opacity-100"
+                    ? "text-brand-medium"
+                    : "text-slate-500 hover:text-brand-darkest dark:hover:text-white"
                 }`}
               >
                 {item.icon} {item.label}
               </a>
-              {activeSection === item.id && (
-                <motion.div
-                  layoutId="underline"
-                  className="absolute -bottom-1 left-0 w-full h-[2px] bg-[#0C7779] rounded-full"
-                />
-              )}
             </li>
           ))}
         </ul>
 
-        {/* Actions */}
-        <div className="flex items-center gap-4">
-          <button
-            onClick={toggleTheme}
-            className="opacity-60 hover:opacity-100 transition-opacity"
-          >
-            {theme === "light" ? <Moon size={18} /> : <Sun size={18} />}
-          </button>
+        {/* Desktop Actions */}
+        <div className="hidden sm:flex items-center gap-3">
           <a
             href="#contact"
-            className="hidden sm:flex px-6 py-2 bg-[#0C7779] text-white rounded-full text-[10px] font-black uppercase tracking-widest hover:scale-105 transition-all"
+            className="flex items-center gap-2 px-5 py-2.5 bg-brand-medium text-white rounded-full text-[10px] font-black uppercase tracking-widest hover:bg-brand-darkest transition-all shadow-md"
           >
             Hire Me
           </a>
-          <button className="lg:hidden" onClick={() => setIsOpen(!isOpen)}>
-            {isOpen ? <X size={24} /> : <Menu size={24} />}
-          </button>
+          <a
+            href="/Profile (4).pdf"
+            download
+            className="flex items-center gap-2 px-5 py-2.5 border border-brand-medium text-brand-medium rounded-full text-[10px] font-black uppercase tracking-widest hover:bg-brand-medium hover:text-white transition-all"
+          >
+            <Download size={12} /> Resume
+          </a>
         </div>
+
+        {/* Mobile Menu Toggle  */}
+        <button
+          className="lg:hidden p-2 text-brand-darkest dark:text-white transition-colors"
+          onClick={() => setIsOpen(!isOpen)}
+        >
+          {isOpen ? <X size={28} /> : <Menu size={28} />}
+        </button>
       </div>
 
-      {/* Mobile Menu */}
+      {/* Mobile Menu Drawer */}
       <AnimatePresence>
         {isOpen && (
           <motion.div
-            initial={{ opacity: 0, x: "100%" }}
-            animate={{ opacity: 1, x: 0 }}
-            exit={{ opacity: 0, x: "100%" }}
-            className="fixed inset-0 bg-base-100 z-[65] flex flex-col items-center justify-center lg:hidden"
+            initial={{ x: "100%" }}
+            animate={{ x: 0 }}
+            exit={{ x: "100%" }}
+            className="fixed right-0 top-0 h-full w-[280px] bg-white dark:bg-slate-950 z-[80] p-8 shadow-2xl flex flex-col"
           >
-            <button
-              className="absolute top-8 right-8"
-              onClick={() => setIsOpen(false)}
-            >
-              <X size={32} />
-            </button>
-            <ul className="flex flex-col gap-8 text-center">
+            <div className="flex justify-end mb-12">
+              <button
+                className="text-brand-darkest dark:text-white"
+                onClick={() => setIsOpen(false)}
+              >
+                <X size={28} />
+              </button>
+            </div>
+            <div className="flex flex-col gap-8">
               {navItems.map((item) => (
-                <li key={item.id}>
-                  <a
-                    href={`#${item.id}`}
-                    onClick={() => setIsOpen(false)}
-                    className="text-3xl font-black uppercase tracking-tighter hover:text-[#0C7779] transition-colors"
-                  >
-                    {item.label}
-                  </a>
-                </li>
+                <a
+                  key={item.id}
+                  href={`#${item.id}`}
+                  onClick={() => setIsOpen(false)}
+                  className="text-sm font-bold uppercase tracking-widest text-slate-600 dark:text-slate-300 hover:text-brand-medium"
+                >
+                  {item.label}
+                </a>
               ))}
-            </ul>
+              <hr className="border-slate-200 dark:border-slate-800" />
+              <a
+                href="/Profile (4).pdf"
+                download
+                className="flex items-center gap-2 text-sm font-bold uppercase text-brand-medium"
+              >
+                <Download size={16} /> Download Resume
+              </a>
+              <a
+                href="#contact"
+                onClick={() => setIsOpen(false)}
+                className="flex items-center justify-center gap-2 w-full py-4 bg-brand-medium text-white rounded-2xl font-bold uppercase tracking-tighter text-xs"
+              >
+                Hire Me <ArrowRight size={14} />
+              </a>
+            </div>
           </motion.div>
         )}
       </AnimatePresence>

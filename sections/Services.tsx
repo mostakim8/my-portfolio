@@ -1,10 +1,9 @@
-"use client"; // এটি অবশ্যই লাগবে
+"use client";
 
 import React from "react";
 import { motion } from "framer-motion";
-import { Layout, Code, Smartphone, Rocket, ArrowUpRight } from "lucide-react";
+import { Layout, Code, Smartphone, Rocket } from "lucide-react";
 
-// ডেটার টাইপ ডিফাইন করা (TypeScript এর জন্য)
 interface Service {
   icon: React.ReactNode;
   title: string;
@@ -14,79 +13,74 @@ interface Service {
 
 const SERVICES: Service[] = [
   {
-    icon: <Layout size={20} />,
-    title: "Frontend",
-    description: "Modern, fast & responsive UI using React/Next.js.",
-    color: "from-blue-500/20 to-cyan-400/20",
+    icon: <Layout size={24} />,
+    title: "Frontend Development",
+    description:
+      "Modern, fast & responsive UI using React and Next.js ecosystem.",
+    color: "bg-blue-500/10 text-blue-500",
   },
   {
-    icon: <Code size={20} />,
-    title: "Backend",
-    description: "Scalable APIs and secure database management.",
-    color: "from-purple-500/20 to-pink-500/20",
+    icon: <Code size={24} />,
+    title: "Backend Development",
+    description: "Scalable server-side APIs and secure database management.",
+    color: "bg-purple-500/10 text-purple-500",
   },
   {
-    icon: <Smartphone size={20} />,
-    title: "Full Stack",
-    description: "End-to-end MERN stack web applications.",
-    color: "from-orange-500/20 to-amber-400/20",
+    icon: <Smartphone size={24} />,
+    title: "Full Stack Solutions",
+    description: "End-to-end MERN stack web application development.",
+    color: "bg-orange-500/10 text-orange-500",
   },
   {
-    icon: <Rocket size={20} />,
-    title: "Optimization",
-    description: "SEO and performance for lightning speed.",
-    color: "from-green-500/20 to-emerald-400/20",
+    icon: <Rocket size={24} />,
+    title: "Performance & SEO",
+    description: "Optimizing web experiences for lightning speed and ranking.",
+    color: "bg-green-500/10 text-green-500",
   },
 ];
 
 const Services = () => {
   return (
-    <section id="services" className="py-20 bg-base-100 relative">
-      <div className="max-w-6xl mx-auto px-6">
-        <div className="mb-12">
+    <section
+      id="services"
+      className="py-16 md:py-20 bg-white dark:bg-slate-950 transition-colors duration-500"
+    >
+      <div className="max-w-7xl mx-auto px-6 md:px-12 lg:px-24">
+        {/* Header */}
+        <div className="mb-12 md:mb-16">
           <motion.h2
-            initial={{ opacity: 0, x: -20 }}
-            whileInView={{ opacity: 1, x: 0 }}
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            className="text-3xl md:text-5xl font-black tracking-tighter"
-          >
-            My <span className="text-primary italic">Services</span>
+            className="text-4xl md:text-5xl font-black tracking-tighter text-center text-brand-darkest dark:text-white italic"
+          > <span className="text-brand-medium not-italic">Services</span>
           </motion.h2>
-          <div className="w-12 h-1 bg-primary mt-2"></div>
+         
         </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+        {/* Responsive Grid */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
           {SERVICES.map((service, index) => (
             <motion.div
               key={index}
-              initial={{ opacity: 0, y: 20 }}
+              initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              transition={{ delay: index * 0.1 }}
-              className="group relative p-6 bg-base-200/40 backdrop-blur-sm border border-base-content/5 rounded-3xl hover:border-primary/30 transition-all duration-300"
+              transition={{ delay: index * 0.1, duration: 0.5 }}
+              className="group p-6 md:p-8 bg-slate-50 dark:bg-slate-900 border border-brand-light/20 rounded-[2rem] hover:border-brand-medium/50 transition-all duration-300 flex flex-col justify-start"
             >
-              <div className="flex flex-col h-full">
-                <div className="flex justify-between items-start mb-6">
-                  <div
-                    className={`p-3 rounded-2xl bg-gradient-to-br ${service.color} text-primary`}
-                  >
-                    {service.icon}
-                  </div>
-                  <ArrowUpRight
-                    size={16}
-                    className="opacity-0 group-hover:opacity-40 transition-opacity"
-                  />
-                </div>
-
-                <h3 className="text-lg font-bold mb-2 tracking-tight group-hover:text-primary transition-colors">
-                  {service.title}
-                </h3>
-                <p className="text-xs opacity-50 leading-relaxed">
-                  {service.description}
-                </p>
-
-                <div className="mt-6 w-0 group-hover:w-full h-[1px] bg-primary/20 transition-all duration-500"></div>
+              <div
+                className={`w-12 h-12 md:w-14 md:h-14 rounded-2xl flex items-center justify-center mb-6 ${service.color}`}
+              >
+                {service.icon}
               </div>
+
+              <h3 className="text-base md:text-lg font-black text-brand-darkest dark:text-white mb-3 tracking-tight group-hover:text-brand-medium transition-colors">
+                {service.title}
+              </h3>
+              <p className="text-xs md:text-sm text-slate-600 dark:text-slate-400 leading-relaxed">
+                {service.description}
+              </p>
             </motion.div>
           ))}
         </div>
