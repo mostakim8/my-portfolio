@@ -21,7 +21,7 @@ const itemVariants = {
   visible: {
     opacity: 1,
     y: 0,
-    transition: { duration: 0.8, ease: [0.22, 1, 0.36, 1] },
+    transition: { duration: 0.8, ease: [0.22, 1, 0.36, 1] as any },
   },
 };
 
@@ -118,19 +118,19 @@ const Hero = () => {
           </motion.div>
         </div>
 
-        {/* Right Content (Image) - এখানে পরিবর্তন করা হয়েছে */}
+        {/* Right Content (Image) 
         <motion.div
           variants={itemVariants}
           className="order-1 lg:order-2 flex justify-center lg:justify-end"
         >
-          {/* কন্টেইনার সাইজ ফিক্স করা হলো */}
+          {/* */}
           <div className="relative w-[280px] h-[350px] md:w-[350px] md:h-[450px] group">
             <div className="relative w-full h-full  bg-slate-200 dark:bg-slate-800 rounded-[2.5rem] overflow-hidden shadow-2xl transition-all duration-700 group-hover:rounded-[3.5rem]">
               <Image
                 src={MyPhoto}
                 alt="Mostakim"
                 fill
-                priority // এটি ইমেজ দ্রুত লোড করবে
+                priority 
                 sizes="(max-width: 768px) 100vw, 350px"
                 className="object-cover pt-2 grayscale group-hover:grayscale-0 transition-all duration-1000 scale-105"
               />
