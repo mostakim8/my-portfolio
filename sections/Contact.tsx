@@ -133,7 +133,7 @@ const Contact = () => {
                 <label className="text-[10px] font-black uppercase tracking-widest text-slate-400 ml-2">
                   Message
                 </label>
-                <textarea
+                <textarea 
                   name="message"
                   required
                   className="w-full bg-white dark:bg-slate-950 p-4 rounded-3xl border border-brand-light/20 outline-none focus:border-brand-medium text-sm min-h-[140px] resize-none text-brand-darkest dark:text-white"
