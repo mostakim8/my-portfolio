@@ -54,8 +54,16 @@ const Hero = () => {
             variants={itemVariants}
             className="text-5xl md:text-7xl lg:text-8xl font-black tracking-tighter leading-[0.9] mb-8 text-brand-darkest dark:text-white"
           >
-            I am <br />{" "}
-            <span className="text-brand-medium italic font-serif">
+            <span
+              className="text-brand-medium italic font-serif"
+              style={{
+                WebkitTextStroke: "1px currentColor",
+                WebkitTextFillColor: "transparent",
+              }}
+            >
+              I am <br />
+            </span>{" "}
+            <span className="bg-gradient-to-r from-brand-light via-brand-medium to-brand-darkest bg-clip-text text-transparent">
               Mostakim
             </span>
           </motion.h1>
@@ -66,11 +74,13 @@ const Hero = () => {
           >
             <TypeAnimation
               sequence={[
+                "Clean Code Enthusiast.",
+                2000,
                 "Frontend Developer.",
                 2000,
-                "React & Next.js Specialist.",
+                "Next.js & TypeScript Expert.",
                 2000,
-                "Clean Code Enthusiast.",
+                "MERN Stack Developer.",
                 2000,
               ]}
               repeat={Infinity}
@@ -81,9 +91,10 @@ const Hero = () => {
             variants={itemVariants}
             className="flex flex-col items-center lg:items-start gap-8"
           >
-            <p className="text-sm md:text-base text-slate-500 dark:text-slate-400 max-w-sm leading-relaxed">
-              Turning complex problems into elegant, high-performance web
-              experiences. Focused on precision, speed, and modern design.
+            <p className="text-sm md:text-base text-center lg:text-justify text-slate-500 dark:text-slate-400 max-w-md leading-relaxed">
+              CSE student at AIUB and a MERN developer. I focus on making fast,
+              clean, and useful websites. My goal is to solve real-world
+              problems with simple and smart designs.
             </p>
 
             <div className="flex flex-wrap items-center justify-center lg:justify-start gap-6">

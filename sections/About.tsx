@@ -1,107 +1,251 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useMemo } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { ChevronRight } from "lucide-react";
-import Image from "next/image";
+import {
+  ChevronRight,
+  Award,
+  Code,
+  BookOpen,
+  Heart,
+  GraduationCap,
+} from "lucide-react";
+
+//import project data  
+import { PROJECT_DATA } from "./Projects";
 
 const About = () => {
-  const [activeTab, setActiveTab] = useState("skills");
+  const [activeTab, setActiveTab] = useState("journey");
   const [selectedAchievement, setSelectedAchievement] = useState<number | null>(
     null,
   );
+  const [isExpanded, setIsExpanded] = useState(false);
 
-  const totalProjects = 10;
-  const learningYears = "3.2";
+  //  Real-time Dynamic Date & Project Calculation
+  const { learningYears, intensiveMonths, totalProjects } = useMemo(() => {
+    const journeyStartDate = new Date("2022-05-02");
+    const intensiveStartDate = new Date("2024-06-01");
+    const today = new Date();
+
+    const diffInMs = today.getTime() - journeyStartDate.getTime();
+    const years = (diffInMs / (1000 * 60 * 60 * 24 * 365.25)).toFixed(1);
+
+    const monthDiff =
+      (today.getFullYear() - intensiveStartDate.getFullYear()) * 12 +
+      (today.getMonth() - intensiveStartDate.getMonth());
+
+    const projectsCount = PROJECT_DATA.length;
+
+    return {
+      learningYears: years,
+      intensiveMonths: monthDiff > 0 ? monthDiff : 7,
+      totalProjects: projectsCount,
+    };
+  }, []);
 
   const tabData: any = {
-    skills: {
-      title: "Technical Expertise",
-      content:
-        "I specialize in the React ecosystem, focusing on performance, accessibility, and clean architecture.",
+    journey: {
+      title: "Programming Journey",
+      icon: <Code size={18} />,
+      content: `My foundation in computing began at AIUB with C++ and Java, which sharpened my problem-solving core. However, my passion for the web led me to self-study HTML, CSS, and Tailwind. To bridge the gap to professional development, I completed a ${intensiveMonths}-month intensive grind at Programming Hero, where I mastered the MERN stack. Over the last ${learningYears} years, I've evolved into a developer who loves building scalable, real-world solutions.`,
       items: [
-        "React.js",
-        "Next.js",
-        "JavaScript",
-        "Tailwind CSS",
-        "Node.js",
-        "Firebase",
-      ],
-    },
-    experience: {
-      title: "Journey & Growth",
-      content:
-        "Building scalable web solutions with a focus on modern UI/UX design patterns.",
-      items: [
-        `${learningYears}+ Years`,
-        `${totalProjects}+ Projects`,
-        "MERN Stack",
+        "MERN Stack Developer",
         "Problem Solver",
-      ],
-    },
-    achievement: {
-      title: "Achievements",
-      content: "Recognitions for my technical skills and dedication.",
-      items: [
-        { headline: "IT Essentials", img: "/Achievement /CISCO.png" },
-        {
-          headline: "Web Design",
-          img: "/Achievement /Responsive Web Design.png",
-        },
-        { headline: "Web Development", img: "Achievement /Web.png" },
+        "Self-Taught Specialist",
       ],
     },
     education: {
       title: "Education",
+      icon: <GraduationCap size={18} />,
       content:
-        "My academic background provides a solid foundation in software engineering.",
-      items: ["B.Sc in CSE (Ongoing)", "Web Development"],
+        "I am currently focused on my academic growth alongside my professional development in software engineering at AIUB.",
+      items: [
+        { name: "B.Sc in CSE", icon: "🎓", detail: "AIUB (2022 - Present)" },
+        { name: "Focus Areas", icon: " ", detail: "OOP & Data Structures" },
+      ],
+    },
+    skills: {
+      title: "Technical Expertise",
+      icon: <BookOpen size={18} />,
+      content:
+        "I thrive in the React ecosystem. My focus is on building high-performance web experiences using Next.js, TypeScript, and Tailwind CSS, while keeping the backend efficient and secure.",
+      items: [
+        { name: "React.js & Next.js", icon: "⚛️" },
+        { name: "TypeScript", icon: "🟦" },
+        { name: "Tailwind CSS", icon: "🎨" },
+        { name: "Node.js", icon: "🟢" },
+        { name: "MongoDB", icon: "🍃" },
+        { name: "Firebase", icon: "🔥" },
+      ],
+    },
+    hobbies: {
+      title: "Life Outside Coding",
+      icon: <Heart size={18} />,
+      content:
+        "When I'm not debugging, you'll find me on the tracks. I'm an endurance runner who recently finished a half marathon in 2 hours. I believe the discipline of training 5 days a week makes me a better, more focused developer.",
+      items: [
+        { name: "Late-Night Coding", icon: "🌙" },
+        { name: "Traveling & Exploring", icon: "🌍" },
+        { name: "Football Tactics", icon: "⚽" },
+        { name: "Reading Tech Blogs", icon: "📖" },
+      ],
+    },
+    achievement: {
+      title: "Achievements",
+      icon: <Award size={18} />,
+      content:
+        "Certifications and milestones that mark my growth as a developer and a professional.",
+      items: [
+        {
+          headline: "Full Stack Web - Programming Hero",
+          img: "/Achievement /Web.png",
+        },
+        { headline: "IT Essentials - CISCO", img: "/Achievement /CISCO.png" },
+        {
+          headline: "Responsive Web Design - FreeCodeCamp",
+          img: "/Achievement /Responsive_Web_ Design.png",
+        },
+        { headline: "Google Ads - Coursera", img: "/Achievement /SEO.png" },
+        {
+          headline: "Data Analysis - Coursera",
+          img: "/Achievement /Data_Anlaysis Using_Excel.png",
+        },
+      ],
     },
   };
 
   return (
     <section
       id="about"
-      className="py-16 md:py-20 px-6 md:px-12 lg:px-24 bg-white dark:bg-slate-950 transition-colors duration-500"
+      className="py-16 md:py-24 px-6 md:px-12 lg:px-24 bg-white dark:bg-slate-950 transition-colors duration-500 overflow-hidden"
     >
-      <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-16 items-start">
-        {/* Left Side */}
-        <div className="lg:col-span-5 space-y-6 text-center lg:text-left">
-          <h2 className="text-4xl md:text-5xl font-black tracking-tighter text-brand-darkest dark:text-white italic">
-            About <span className="text-brand-medium not-italic">Me</span>
-          </h2>
-          <p className="text-base md:text-lg text-slate-600 dark:text-slate-300 leading-relaxed">
-            I’m a developer who loves turning complex problems into{" "}
-            <span className="text-brand-medium font-bold">
-              simple, beautiful interfaces
-            </span>
-            .
-          </p>
+      <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-start">
+        {/* Left Side: Introduction */}
+        <div className="lg:col-span-5 space-y-8 text-center lg:text-left">
+          <motion.div
+            initial={{ opacity: 0, x: -20 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true }}
+          >
+            <h2 className="text-4xl md:text-5xl lg:text-6xl font-black tracking-tighter text-brand-darkest dark:text-white italic leading-tight">
+              About <span className="text-brand-medium not-italic">Me</span>
+            </h2>
+            <div className="h-1.5 w-20 bg-brand-medium mt-4 mx-auto lg:mx-0 rounded-full" />
+          </motion.div>
 
-          <div className="grid grid-cols-2 gap-4 md:gap-6">
-            <div className="p-5 md:p-6 border-2 border-brand-light/20 rounded-3xl bg-brand-medium/5">
-              <h4 className="text-2xl md:text-3xl font-black text-brand-medium">
-                {totalProjects}+
-              </h4>
-              <p className="text-[10px] font-bold uppercase tracking-widest text-slate-500 mt-2">
-                Projects
-              </p>
-            </div>
-            <div className="p-5 md:p-6 border-2 border-brand-light/20 rounded-3xl bg-brand-medium/5">
-              <h4 className="text-2xl md:text-3xl font-black text-brand-medium">
-                {learningYears}+
-              </h4>
-              <p className="text-[10px] font-bold uppercase tracking-widest text-slate-500 mt-2">
-                Years
-              </p>
-            </div>
+          <div className="text-base md:text-lg text-slate-600 dark:text-slate-300 leading-relaxed font-medium text-justify">
+            <p className="inline">
+              Hi, I&apos;m{" "}
+              <span className="text-brand-darkest dark:text-white font-bold">
+                Mostakim
+              </span>
+              . I&apos;m a CSE student at AIUB and a web developer. At
+              university, I learned the basics with C++ and Java, but I spent
+              most of my free time learning how to build modern websites.
+            </p>
+
+            {!isExpanded && (
+              <button
+                onClick={() => setIsExpanded(true)}
+                className="text-brand-medium font-bold hover:underline inline-flex items-center gap-1 ml-1"
+              >
+                See More...
+              </button>
+            )}
+
+            <AnimatePresence>
+              {isExpanded && (
+                <motion.span
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  exit={{ opacity: 0 }}
+                  className="inline"
+                >
+                  <span className="block mt-4">
+                    I soon realized that classes weren&apos;t enough to build
+                    the cool things I had in mind. So, I joined
+                    <span className="text-brand-medium font-bold ml-1">
+                      Programming Hero.
+                    </span>
+                    I practiced coding for 8 to 10 hours every day to learn the
+                    Web development skills I needed to build real projects with{" "}
+                    <span className="text-brand-medium font-bold ml-1">
+                      Programming Hero.
+                    </span>{" "}
+                    But, I started learning web development in 2022, and after 1
+                    year of self-study, I joined Programming Hero in August 2025
+                    for an intensive 7-month program. For {intensiveMonths}{" "}
+                    months, build myself as a{" "}
+                    <span className="text-brand-medium font-bold">
+                      MERN stack
+                    </span>
+                    .
+                  </span>
+
+                  <span className="block mt-4">
+                    I also wanted to learn more than just coding. I got
+                    certified in{" "}
+                    <span className="text-brand-medium font-bold">
+                      Responsive Web Design
+                    </span>{" "}
+                    from freeCodeCamp and even took courses on{" "}
+                    <span className="text-brand-medium font-bold">
+                      Data Analysis
+                    </span>{" "}
+                    and{" "}
+                    <span className="text-brand-medium font-bold">
+                      Google Ads
+                    </span>
+                    . This helps me build apps that don&apos;t just work well
+                    but also help businesses grow.
+                  </span>
+
+                  <span className="block mt-4">
+                    Now, I mostly use{" "}
+                    <span className="text-brand-medium font-bold">
+                      TypeScript
+                    </span>{" "}
+                    and{" "}
+                    <span className="text-brand-medium font-bold">Next.js</span>
+                    . I try to build things that are simple, clean, and easy for
+                    everyone to use.
+                  </span>
+
+                  <button
+                    onClick={() => setIsExpanded(false)}
+                    className="text-brand-medium font-bold hover:underline inline-flex items-center gap-1 mt-2"
+                  >
+                    See Less
+                  </button>
+                </motion.span>
+              )}
+            </AnimatePresence>
+          </div>
+
+          <div className="grid grid-cols-2 gap-4 md:gap-6 pt-4">
+            {[
+              { label: "Projects Built", value: `${totalProjects}+` },
+              { label: "Years Experience", value: `${learningYears}+` },
+            ].map((stat, i) => (
+              <motion.div
+                key={i}
+                whileHover={{ y: -5 }}
+                className="p-5 md:p-6 border border-brand-light/20 rounded-[2rem] bg-slate-50 dark:bg-slate-900/50 backdrop-blur-sm"
+              >
+                <h4 className="text-2xl md:text-3xl font-black text-brand-medium">
+                  {stat.value}
+                </h4>
+                <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-slate-500 mt-2">
+                  {stat.label}
+                </p>
+              </motion.div>
+            ))}
           </div>
         </div>
 
-        {/* Right Side - Tabs */}
-        <div className="lg:col-span-7 w-full bg-white dark:bg-slate-900 rounded-[2rem] border border-brand-light/20 shadow-2xl overflow-hidden">
-          {/* Tabs Navigation */}
-          <div className="flex overflow-x-auto gap-2 p-2 bg-slate-50 dark:bg-slate-950 scrollbar-hide">
+        {/* Right Side: Interactive Tabs */}
+        <div className="lg:col-span-7 w-full bg-white dark:bg-slate-900/40 rounded-[2.5rem] border border-brand-light/10 shadow-2xl overflow-hidden backdrop-blur-md">
+          <div className="flex overflow-x-auto gap-1 p-3 bg-slate-50 dark:bg-slate-950/50 scrollbar-hide border-b border-brand-light/10">
             {Object.keys(tabData).map((tab) => (
               <button
                 key={tab}
@@ -109,75 +253,97 @@ const About = () => {
                   setActiveTab(tab);
                   setSelectedAchievement(null);
                 }}
-                className={`px-4 md:px-6 py-3 rounded-xl text-[10px] md:text-xs font-black uppercase whitespace-nowrap transition-all ${activeTab === tab ? "bg-brand-medium text-white shadow-lg" : "text-slate-500 hover:bg-brand-light/10"}`}
+                className={`flex items-center gap-2 mx-1 px-5 py-3 rounded-2xl text-[10px] md:text-xs font-black uppercase transition-all duration-300 ${activeTab === tab ? "bg-brand-medium text-white shadow-lg shadow-brand-medium/20 scale-105" : "text-slate-500 hover:bg-brand-light/10"}`}
               >
-                {tab}
+                {tabData[tab].icon} {tab}
               </button>
             ))}
           </div>
 
-          <div className="p-6 md:p-8 min-h-[350px]">
+          <div className="p-8 md:p-10 min-h-[400px]">
             <AnimatePresence mode="wait">
               <motion.div
                 key={activeTab}
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                exit={{ opacity: 0 }}
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -10 }}
+                transition={{ duration: 0.3 }}
               >
-                <h3 className="text-xl md:text-2xl font-bold mb-4 text-brand-darkest dark:text-brand-light capitalize">
+                <h3 className="text-2xl md:text-3xl font-bold mb-5 text-brand-darkest dark:text-white">
                   {tabData[activeTab].title}
                 </h3>
-                <p className="text-sm md:text-base text-slate-600 dark:text-slate-300 mb-6 italic leading-relaxed">
-                  "{tabData[activeTab].content}"
+                <p className="text-sm md:text-base text-justify text-slate-600 dark:text-slate-300 mb-8 leading-relaxed font-medium">
+                  {tabData[activeTab].content}
                 </p>
 
                 {activeTab === "achievement" ? (
-                  tabData.achievement.items.map((item: any, index: number) => (
-                    <div key={index} className="mb-3">
-                      <button
-                        onClick={() =>
-                          setSelectedAchievement(
-                            selectedAchievement === index ? null : index,
-                          )
-                        }
-                        className="w-full flex items-center justify-between p-4 rounded-xl bg-slate-50 dark:bg-slate-800 border border-brand-light/20 hover:border-brand-medium transition-all"
-                      >
-                        <span className="font-bold text-sm">
-                          {item.headline}
-                        </span>
-                        <ChevronRight
-                          size={18}
-                          className={`transition-transform ${selectedAchievement === index ? "rotate-90" : ""}`}
-                        />
-                      </button>
-
-                      {selectedAchievement === index && (
-                        <motion.div
-                          initial={{ height: 0, opacity: 0 }}
-                          animate={{ height: "auto", opacity: 1 }}
-                          className="overflow-hidden"
-                        >
-                          <div className="mt-3 p-2 bg-slate-50 dark:bg-slate-800 rounded-xl">
-                            <img
-                              src={item.img}
-                              alt={item.headline}
-                              className="rounded-lg w-full h-auto object-contain"
+                  <div className="space-y-3">
+                    {tabData.achievement.items.map(
+                      (item: any, index: number) => (
+                        <div key={index} className="overflow-hidden">
+                          <button
+                            onClick={() =>
+                              setSelectedAchievement(
+                                selectedAchievement === index ? null : index,
+                              )
+                            }
+                            className={`w-full flex items-center justify-between p-5 rounded-2xl border transition-all ${selectedAchievement === index ? "bg-brand-medium/10 border-brand-medium" : "bg-slate-50 dark:bg-slate-800/50 border-brand-light/10 hover:border-brand-medium/50"}`}
+                          >
+                            <span className="font-bold text-sm dark:text-slate-200">
+                              {item.headline}
+                            </span>
+                            <ChevronRight
+                              size={18}
+                              className={`transition-transform duration-300 ${selectedAchievement === index ? "rotate-90 text-brand-medium" : "text-slate-400"}`}
                             />
-                          </div>
-                        </motion.div>
-                      )}
-                    </div>
-                  ))
+                          </button>
+                          <AnimatePresence>
+                            {selectedAchievement === index && (
+                              <motion.div
+                                initial={{ height: 0, opacity: 0 }}
+                                animate={{ height: "auto", opacity: 1 }}
+                                exit={{ height: 0, opacity: 0 }}
+                                className="bg-slate-100 dark:bg-slate-800/80 rounded-b-2xl p-4"
+                              >
+                                <img
+                                  src={item.img}
+                                  alt={item.headline}
+                                  className="rounded-xl w-full h-auto shadow-inner border border-white/10"
+                                />
+                              </motion.div>
+                            )}
+                          </AnimatePresence>
+                        </div>
+                      ),
+                    )}
+                  </div>
                 ) : (
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                    {tabData[activeTab].items.map((item: string, i: number) => (
-                      <div
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    {tabData[activeTab].items?.map((item: any, i: number) => (
+                      <motion.div
                         key={i}
-                        className="p-4 bg-slate-50 dark:bg-slate-800 rounded-xl border border-brand-light/20 font-bold text-xs md:text-sm text-slate-700 dark:text-slate-200 flex items-center gap-3"
+                        whileHover={{ scale: 1.02 }}
+                        className="p-4 bg-slate-50 dark:bg-slate-800/50 rounded-2xl border border-brand-light/10 font-bold text-xs md:text-sm text-slate-700 dark:text-slate-200 flex items-center gap-4 group"
                       >
-                        <div className="w-2 h-2 rounded-full bg-brand-medium" />
-                        {item}
-                      </div>
+                        {typeof item === "string" ? (
+                          <>
+                            <div className="w-2.5 h-2.5 rounded-full bg-brand-medium group-hover:scale-125 transition-transform" />
+                            {item}
+                          </>
+                        ) : (
+                          <div className="flex items-center gap-3">
+                            <span className="text-xl">{item.icon}</span>
+                            <div className="flex flex-col">
+                              <span>{item.name}</span>
+                              {item.detail && (
+                                <span className="text-[10px] text-slate-500 font-medium tracking-tight">
+                                  {item.detail}
+                                </span>
+                              )}
+                            </div>
+                          </div>
+                        )}
+                      </motion.div>
                     ))}
                   </div>
                 )}

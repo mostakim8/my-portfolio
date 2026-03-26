@@ -27,7 +27,7 @@ const SERVICES: Service[] = [
   },
   {
     icon: <Smartphone size={24} />,
-    title: "Full Stack Solutions",
+    title: "MERN Stack Development",
     description: "End-to-end MERN stack web application development.",
     color: "bg-orange-500/10 text-orange-500",
   },
@@ -47,15 +47,27 @@ const Services = () => {
     >
       <div className="max-w-7xl mx-auto px-6 md:px-12 lg:px-24">
         {/* Header */}
-        <div className="mb-12 md:mb-16">
-          <motion.h2
-            initial={{ opacity: 0, y: 20 }}
+        <div className="text-center mb-16">
+          <h2 className="text-4xl md:text-5xl font-black tracking-tighter  text-slate-900 dark:text-white">
+            {" "}
+            <span className="text-brand-medium not-italic font-serif">
+              Services
+            </span>
+          </h2>
+
+          <motion.p
+            initial={{ opacity: 0, y: 10 }}
             whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, delay: 0.2 }}
             viewport={{ once: true }}
-            className="text-4xl md:text-5xl font-black tracking-tighter text-center text-brand-darkest dark:text-white italic"
-          > <span className="text-brand-medium not-italic">Services</span>
-          </motion.h2>
-         
+            className="max-w-2xl mx-auto mt-4 text-sm md:text-base text-slate-600 dark:text-slate-400 font-medium leading-relaxed"
+          >
+            Crafting{" "}
+            <span className="text-brand-medium font-bold">
+              seamless digital experiences
+            </span>{" "}
+            through innovative design and precision-driven development.
+          </motion.p>
         </div>
 
         {/* Responsive Grid */}
