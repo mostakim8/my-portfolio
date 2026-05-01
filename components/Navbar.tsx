@@ -47,9 +47,20 @@ const Navbar = () => {
         {/* Logo */}
         <a
           href="#home"
-          className="text-xl font-black tracking-tighter text-brand-darkest dark:text-white"
+          className="group text-3xl font-black tracking-tighter text-brand-medium transition-all duration-300 hover:text-slate-900 dark:hover:text-white "
         >
-          MOSTAKIM<span className="text-brand-medium italic">.dev</span>
+          <span className="text-slate-900 dark:text-white group-hover:text-brand-medium">
+            M
+          </span>
+          0
+          <span className="text-slate-900 dark:text-white group-hover:text-brand-medium">
+            S
+          </span>
+          TAKI
+          <span className="text-slate-900 dark:text-white group-hover:text-brand-medium">
+            M
+          </span>
+          <p className="text-[13px] text-white/50">Mern-Stack Developer</p>
         </a>
 
         {/* Desktop Nav */}
@@ -80,7 +91,7 @@ const Navbar = () => {
             Hire Me
           </a>
           <a
-            href="/Resume/All_Mostakim.pdf"
+            href="/Resume/Resume-(All Mostakim).pdf"
             download="Mostakim_Resume.pdf"
             className="flex items-center gap-2 px-5 py-2.5 border border-brand-medium text-brand-medium rounded-full text-[10px] font-black uppercase tracking-widest hover:bg-brand-medium hover:text-white transition-all"
           >

@@ -41,15 +41,21 @@ const TECH_DATA = [
     icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nextjs/nextjs-original.svg",
   },
   {
-    name: "TypeScript",
-    level: "Frontend",
-    icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/typescript/typescript-original.svg",
-  },
-  {
     name: "Express.js",
     level: "Backend",
     icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/express/express-original.svg",
   },
+  {
+    name: "Stripe",
+    level: "Payment Gateway",
+    icon: "https://www.vectorlogo.zone/logos/stripe/stripe-icon.svg",
+  },
+  {
+    name: "TypeScript",
+    level: "Frontend",
+    icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/typescript/typescript-original.svg",
+  },
+
   {
     name: "MongoDB",
     level: "Database",
@@ -60,11 +66,7 @@ const TECH_DATA = [
     level: "Cloud",
     icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/firebase/firebase-plain.svg",
   },
-  {
-    name: "VS Code",
-    level: "Editor",
-    icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/vscode/vscode-original.svg",
-  },
+
   {
     name: "GitHub",
     level: "Version Control",
@@ -102,6 +104,11 @@ const TECH_DATA = [
     level: "Inspiration",
     icon: "https://staging.svgrepo.com/show/22048/dribbble.svg",
   },
+  {
+    name: "Framer Motion",
+    level: "Animation",
+    icon: "https://www.vectorlogo.zone/logos/framer/framer-icon.svg",
+  },
 ];
 
 const containerVariants = {
@@ -133,8 +140,9 @@ const TechStack = () => {
               <span className="text-brand-medium not-italic">Technology</span>
             </h2>
             <p className="text-sm md:text-base text-slate-600 dark:text-slate-300 mt-4 text-center">
-              Tools and technologies I use to build high-performance digital
-              experiences.
+              I use a modern and reliable set of tools to build fast, scalable
+              web apps. From frontend design to backend logic, I focus on
+              delivering clean code.
             </p>
           </div>
 

@@ -74,13 +74,13 @@ const Hero = () => {
           >
             <TypeAnimation
               sequence={[
-                "Clean Code Enthusiast.",
+                "Full Stack Web Developer.", // আপডেট করা টাইটেল
                 2000,
-                "Frontend Developer.",
+                "MERN Stack Specialist.",
                 2000,
-                "Next.js & TypeScript Expert.",
+                "Next.js & TypeScript Enthusiast.",
                 2000,
-                "MERN Stack Developer.",
+                "Persistent Problem Solver.", // আপনার ১৮ দিনের ডিবাগিং স্পিরিট বোঝাতে
                 2000,
               ]}
               repeat={Infinity}
@@ -92,9 +92,11 @@ const Hero = () => {
             className="flex flex-col items-center lg:items-start gap-8"
           >
             <p className="text-sm md:text-base text-center lg:text-justify text-slate-500 dark:text-slate-400 max-w-md leading-relaxed">
-              CSE student at AIUB and a MERN developer. I focus on making fast,
-              clean, and useful websites. My goal is to solve real-world
-              problems with simple and smart designs.
+              CSE student at AIUB with a deep passion for building scalable web
+              applications. Specializing in the{" "}
+              <span className="text-brand-medium font-bold">MERN Stack</span>, I
+              focus on turning complex problems into clean, high-performance
+              digital solutions.
             </p>
 
             <div className="flex flex-wrap items-center justify-center lg:justify-start gap-6">
@@ -117,7 +119,7 @@ const Hero = () => {
                   <Github size={20} />
                 </a>
                 <a
-                  href="https://linkedin.com/in/all-mostakim/"
+                  href="https://www.linkedin.com/in/all-mostakim/"
                   target="_blank"
                   rel="noreferrer"
                   className="text-slate-400 hover:text-brand-medium transition-colors"

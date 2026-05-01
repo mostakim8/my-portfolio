@@ -12,7 +12,7 @@ const Footer = () => {
             Mostakim <span className="text-brand-medium">.</span>
           </p>
           <p className="text-[10px] font-bold uppercase tracking-widest text-slate-500 mt-1">
-            Frontend Developer
+            Mern stack Developer
           </p>
         </div>
 

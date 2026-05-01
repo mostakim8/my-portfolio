@@ -61,7 +61,7 @@ const About = () => {
         "I am currently focused on my academic growth alongside my professional development in software engineering at AIUB.",
       items: [
         { name: "B.Sc in CSE", icon: "🎓", detail: "AIUB (2022 - Present)" },
-        { name: "Focus Areas", icon: " ", detail: "OOP & Data Structures" },
+        { name: "Focus Areas", icon: "🎯 ", detail: "Web Development" },
       ],
     },
     skills: {
@@ -71,7 +71,7 @@ const About = () => {
         "I thrive in the React ecosystem. My focus is on building high-performance web experiences using Next.js, TypeScript, and Tailwind CSS, while keeping the backend efficient and secure.",
       items: [
         { name: "React.js & Next.js", icon: "⚛️" },
-        { name: "TypeScript", icon: "🟦" },
+        { name: "TypeScript", icon: " 🔷 " },
         { name: "Tailwind CSS", icon: "🎨" },
         { name: "Node.js", icon: "🟢" },
         { name: "MongoDB", icon: "🍃" },
@@ -139,9 +139,9 @@ const About = () => {
               <span className="text-brand-darkest dark:text-white font-bold">
                 Mostakim
               </span>
-              . I&apos;m a CSE student at AIUB and a web developer. At
-              university, I learned the basics with C++ and Java, but I spent
-              most of my free time learning how to build modern websites.
+              . I&apos;m a Full Stack Web Developer and a CSE student at AIUB.
+              While university taught me the fundamentals with C++ and Java, I
+              spent my free time mastering modern web technologies.
             </p>
 
             {!isExpanded && (
@@ -162,53 +162,54 @@ const About = () => {
                   className="inline"
                 >
                   <span className="block mt-4">
-                    I soon realized that classes weren&apos;t enough to build
-                    the cool things I had in mind. So, I joined
+                    My journey started in 2022 with self-study. To sharpen my
+                    skills, I completed an intensive 7-month program at
                     <span className="text-brand-medium font-bold ml-1">
-                      Programming Hero.
+                      Programming Hero
                     </span>
-                    I practiced coding for 8 to 10 hours every day to learn the
-                    Web development skills I needed to build real projects with{" "}
+                    , where I spent 8 to 10 hours daily mastering the
                     <span className="text-brand-medium font-bold ml-1">
-                      Programming Hero.
-                    </span>{" "}
-                    But, I started learning web development in 2022, and after 1
-                    year of self-study, I joined Programming Hero in August 2025
-                    for an intensive 7-month program. For {intensiveMonths}{" "}
-                    months, build myself as a{" "}
-                    <span className="text-brand-medium font-bold">
                       MERN stack
                     </span>
-                    .
+                    . This experience turned my passion into professional
+                    expertise.
                   </span>
 
                   <span className="block mt-4">
-                    I also wanted to learn more than just coding. I got
-                    certified in{" "}
-                    <span className="text-brand-medium font-bold">
-                      Responsive Web Design
-                    </span>{" "}
-                    from freeCodeCamp and even took courses on{" "}
-                    <span className="text-brand-medium font-bold">
-                      Data Analysis
-                    </span>{" "}
-                    and{" "}
-                    <span className="text-brand-medium font-bold">
-                      Google Ads
+                    Beyond coding, I am certified in
+                    <span className="text-brand-medium font-bold ml-1">
+                      {" "}
+                      Responsive Web Design{" "}
                     </span>
-                    . This helps me build apps that don&apos;t just work well
-                    but also help businesses grow.
+                    from freeCodeCamp. I also believe in a data-driven approach,
+                    earning professional certifications in
+                    <span className="text-brand-medium font-bold ml-1">
+                      {" "}
+                      Data Analysis{" "}
+                    </span>
+                    and
+                    <span className="text-brand-medium font-bold ml-1">
+                      {" "}
+                      Google Ads{" "}
+                    </span>
+                    via Coursera. This mix helps me build apps that are both
+                    functional and business-focused.
                   </span>
 
                   <span className="block mt-4">
-                    Now, I mostly use{" "}
+                    Currently, I focus on building clean and scalable
+                    applications using
                     <span className="text-brand-medium font-bold">
-                      TypeScript
-                    </span>{" "}
-                    and{" "}
-                    <span className="text-brand-medium font-bold">Next.js</span>
-                    . I try to build things that are simple, clean, and easy for
-                    everyone to use.
+                      {" "}
+                      TypeScript{" "}
+                    </span>
+                    and
+                    <span className="text-brand-medium font-bold">
+                      {" "}
+                      Next.js{" "}
+                    </span>
+                    . I love solving real-world problems with simple,
+                    user-friendly designs.
                   </span>
 
                   <button

@@ -5,10 +5,21 @@ import { motion, AnimatePresence } from "framer-motion";
 
 const SKILLS_DATA: any = {
   Frontend: [
-    { name: "React", level: "Expert", startDate: "2024-07-01", icon: "react" },
+    {
+      name: "React",
+      level: "Advanced",
+      startDate: "2024-07-01",
+      icon: "react",
+    },
+    {
+      name: "Next.js",
+      level: "Medium",
+      startDate: "2025-07-01",
+      icon: "nextdotjs",
+    },
     {
       name: "Tailwind",
-      level: "Expert",
+      level: "Advanced",
       startDate: "2022-05-02",
       icon: "tailwindcss",
     },
@@ -20,61 +31,55 @@ const SKILLS_DATA: any = {
     },
     {
       name: "TypeScript",
-      level: "Basic",
+      level: "Intermediate",
       startDate: "2026-01-10",
       icon: "typescript",
     },
   ],
   Backend: [
     {
-      name: "Next.js",
-      level: "Medium",
-      startDate: "2025-07-01",
-      icon: "nextdotjs",
-    },
-    {
       name: "Node.js",
-      level: "Medium",
+      level: "Intermediate",
       startDate: "2025-10-14",
       icon: "nodedotjs",
+    },
+    {
+      name: "Express.js",
+      level: "Intermediate",
+      startDate: "2025-10-20",
+      icon: "express",
     },
   ],
   Database: [
     {
       name: "MongoDB",
-      level: "Medium",
+      level: "Intermediate",
       startDate: "2025-11-12",
       icon: "mongodb",
     },
     {
       name: "Firebase",
-      level: "Medium",
+      level: "Intermediate",
       startDate: "2025-11-12",
       icon: "firebase",
     },
   ],
   Tools: [
     {
-      name: "VS Code",
-      level: "Advance",
-      startDate: "2022-01-10",
-      icon: "visualstudiocode",
-    },
-    {
       name: "Github",
-      level: "Medium",
+      level: "Advanced",
       startDate: "2020-03-05",
       icon: "github",
     },
     {
       name: "Vercel",
-      level: "Medium",
+      level: "Advanced",
       startDate: "2025-11-12",
       icon: "vercel",
     },
     {
       name: "Netlify",
-      level: "Medium",
+      level: "Advanced",
       startDate: "2023-06-15",
       icon: "netlify",
     },
