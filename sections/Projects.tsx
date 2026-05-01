@@ -161,7 +161,7 @@ const Projects = () => {
               />
 
               {/* Overlay Content */}
-              <div className="absolute inset-0 bg-brand-darkest/95 backdrop-blur-md opacity-0 group-hover:opacity-100 transition-all duration-500 p-6 md:p-8 flex flex-col justify-center items-center">
+              <div className="absolute inset-0 bg-brand-darkest/95 backdrop-blur-md opacity-0 group-hover:opacity-90 transition-all duration-500 p-6 md:p-8 flex flex-col justify-center items-center">
                 <motion.div
                   initial={{ y: 20, opacity: 0 }}
                   whileInView={{ y: 0, opacity: 1 }}
