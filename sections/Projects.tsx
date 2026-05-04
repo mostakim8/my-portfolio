@@ -19,7 +19,7 @@ interface Project {
 // Exporting PROJECT_DATA
 export const PROJECT_DATA: Project[] = [
   {
-    image: "/Projects Img/Untitled design.png", // আপনার প্রজেক্টের একটি স্ক্রিনশট লিঙ্ক এখানে দিন
+    image: "/Projects Img/Asset_Verse.png",
     title: "AssetVerse–Smart Corporate Asset Management",
     description:
       "I built this B2B SaaS platform to bridge the gap between HR Managers and Employees. It simplifies how companies track their equipment, manage requests, and monitor stock levels in real-time, moving away from messy spreadsheets to a streamlined digital dashboard.",
@@ -42,7 +42,7 @@ export const PROJECT_DATA: Project[] = [
     },
   },
   {
-    image: "/Projects Img/AIModelMarketplace.png",
+    image: "/Projects Img/AI Model.png",
     title: "AI Model Inventory & Marketplace",
     description:
       "A sophisticated full-stack platform built with the MERN stack for discovering and managing AI models. It features a secure marketplace with real-time inventory tracking, multi-role dashboards, and seamless payment integration for a premium user experience.",
@@ -139,8 +139,7 @@ const Projects = () => {
         </div>
 
         {/* Projects Grid */}
-        {/* Projects Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8 mb-16 w-full">
+        <div className="grid grid-cols-1 md:grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-8 mb-16 w-full">
           {PROJECT_DATA.map((project, index) => (
             <motion.div
               key={index}
@@ -148,8 +147,7 @@ const Projects = () => {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ delay: index * 0.1, duration: 0.5 }}
-              // w-full যোগ করা হয়েছে যাতে কার্ড কন্টেইনারের পুরো উইডথ নেয়
-              className="group relative w-full h-[480px] md:h-[500px] rounded-[2.5rem] overflow-hidden border border-brand-light/20 shadow-lg bg-slate-100 dark:bg-slate-900"
+              className="group relative w-full h-[480px] md:h-[400px] rounded-[2.5rem] overflow-hidden border border-brand-light/20 shadow-lg bg-slate-100 dark:bg-slate-900"
             >
               {/* Project Image */}
               <Image
