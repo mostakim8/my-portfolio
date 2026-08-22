@@ -147,7 +147,34 @@ export default function AIChatbot() {
     }
 
     if (
-      /react|next|node|typescript|tailwind|express|mongodb|javascript|full-stack|mern|git/.test(
+      q.includes("skill") ||
+      q.includes("skills") ||
+      q.includes("stack") ||
+      q.includes("tech") ||
+      q.includes("technology") ||
+      q.includes("সব স্কিল") ||
+      q.includes("স্কিল")
+    ) {
+      return {
+        text: "Here are Mostakim's core skills:\n\n• Frontend: React, Next.js, JavaScript, TypeScript, Tailwind CSS\n• Backend: Node.js, Express.js\n• Database: MongoDB, Firebase\n• Tools: GitHub, Vercel, Netlify",
+      };
+    }
+
+    if (
+      q.includes("service") ||
+      q.includes("services") ||
+      q.includes("offer") ||
+      q.includes("what can you do") ||
+      q.includes("সার্ভিস") ||
+      q.includes("কী সার্ভিস")
+    ) {
+      return {
+        text: "Mostakim offers these specialized services:\n\n1. Frontend Development (React, Next.js, Tailwind, Framer Motion)\n2. Backend Development (Express.js, REST APIs, JWT, MongoDB)\n3. MERN Stack Solutions (End-to-End Apps, Admin Dashboards, Stripe, PDF Reports)\n4. Performance & SEO (PageSpeed, Core Web Vitals, SSR, Meta Tags)",
+      };
+    }
+
+    if (
+      /react|next|node|typescript|tailwind|express|mongodb|javascript|full-stack|mern|frontend|backend|webdevelopment|git|firebase|vercel|netlify|stripe|seo/.test(
         q,
       )
     ) {
@@ -217,9 +244,9 @@ export default function AIChatbot() {
           </span>
         </button>
       ) : (
-        <div className="w-[330px] sm:w-[370px] h-[480px] bg-slate-950/95 backdrop-blur-xl border border-slate-800 rounded-2xl shadow-2xl flex flex-col overflow-hidden">
+        <div className="w-[330px] sm:w-[370px] h-[480px] bg-slate-950 border border-slate-800 rounded-2xl shadow-2xl flex flex-col overflow-hidden relative">
           {/* Header */}
-          <div className="p-3.5 bg-slate-900/80 border-b border-slate-800 flex items-center justify-between">
+          <div className="p-3.5 bg-slate-900/90 border-b border-slate-800 flex items-center justify-between relative z-10 backdrop-blur-md">
             <div className="flex items-center gap-2.5">
               <div className="w-7 h-7 rounded-full overflow-hidden border border-slate-700 bg-slate-800 flex items-center justify-center shrink-0">
                 {!imgError ? (
@@ -253,64 +280,75 @@ export default function AIChatbot() {
             </button>
           </div>
 
-          {/* Chat Messages */}
-          <div className="flex-1 p-3.5 overflow-y-auto space-y-3 text-xs custom-scrollbar">
-            {messages.map((msg) => (
-              <div
-                key={msg.id}
-                className={`flex ${
-                  msg.sender === "user" ? "justify-end" : "justify-start"
-                }`}
-              >
+          {/* Full-Stack & Software Engineering Tech Pattern Background */}
+          <div className="flex-1 p-3.5 overflow-y-auto space-y-3 text-xs custom-scrollbar relative">
+            {/* Developer Vector Pattern: Code Brackets, DB Nodes & API Endpoints */}
+            <div
+              className="absolute inset-0 pointer-events-none opacity-[0.08] z-0"
+              style={{
+                backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100' height='100' viewBox='0 0 100 100'%3E%3Cg fill='%2306b6d4' font-family='monospace' font-size='10' font-weight='bold'%3E%3Ctext x='10' y='20'%3E%26lt%3B/%26gt%3B%3C/text%3E%3Ctext x='60' y='45'%3E%7B%7D%3C/text%3E%3Ctext x='15' y='75'%3E%26gt%3B_%3C/text%3E%3Ccircle cx='75' cy='18' r='3' fill-opacity='0.4'/%3E%3Ccircle cx='75' cy='25' r='3' fill-opacity='0.4'/%3E%3Cpath d='M70 18h10M70 25h10' stroke='%2306b6d4' stroke-width='1'/%3E%3Cpath d='M10 40h20m-10-10v20' stroke='%2306b6d4' stroke-width='1' stroke-dasharray='2,2'/%3E%3Cpath d='M50 80h30' stroke='%2306b6d4' stroke-width='1'/%3E%3Ccircle cx='50' cy='80' r='2'/%3E%3Ccircle cx='80' cy='80' r='2'/%3E%3C/g%3E%3C/svg%3E")`,
+                backgroundRepeat: "repeat",
+              }}
+            />
+
+            <div className="relative z-10 space-y-3">
+              {messages.map((msg) => (
                 <div
-                  className={`max-w-[82%] p-3 rounded-xl leading-relaxed ${
-                    msg.sender === "user"
-                      ? "bg-cyan-500 text-slate-950 font-medium rounded-tr-xs"
-                      : "bg-slate-900/90 text-slate-200 border border-slate-800/80 rounded-tl-xs"
+                  key={msg.id}
+                  className={`flex ${
+                    msg.sender === "user" ? "justify-end" : "justify-start"
                   }`}
                 >
-                  <p className="whitespace-pre-line">{msg.text}</p>
+                  <div
+                    className={`max-w-[82%] p-3 rounded-xl leading-relaxed ${
+                      msg.sender === "user"
+                        ? "bg-cyan-500 text-slate-950 font-medium rounded-tr-xs"
+                        : "bg-slate-900/90 backdrop-blur-md text-slate-200 border border-slate-800/80 rounded-tl-xs shadow-sm"
+                    }`}
+                  >
+                    <p className="whitespace-pre-line">{msg.text}</p>
 
-                  {/* File Upload Status */}
-                  {msg.fileInfo && (
-                    <div className="mt-2 pt-1.5 border-t border-slate-800 text-[10px] font-mono">
-                      {msg.fileInfo.status === "scanning" && (
-                        <span className="text-cyan-400 flex items-center gap-1">
-                          <Loader2 size={11} className="animate-spin" />{" "}
-                          Scanning file...
-                        </span>
-                      )}
-                      {msg.fileInfo.status === "safe" && (
-                        <span className="text-emerald-400 flex items-center gap-1 font-semibold">
-                          <ShieldCheck size={13} /> Verified Safe
-                        </span>
-                      )}
-                      {msg.fileInfo.status === "rejected" && (
-                        <span className="text-rose-400 flex items-center gap-1 font-semibold">
-                          <ShieldAlert size={13} /> Blocked
-                        </span>
-                      )}
-                    </div>
-                  )}
+                    {/* File Upload Status */}
+                    {msg.fileInfo && (
+                      <div className="mt-2 pt-1.5 border-t border-slate-800 text-[10px] font-mono">
+                        {msg.fileInfo.status === "scanning" && (
+                          <span className="text-cyan-400 flex items-center gap-1">
+                            <Loader2 size={11} className="animate-spin" />{" "}
+                            Scanning file...
+                          </span>
+                        )}
+                        {msg.fileInfo.status === "safe" && (
+                          <span className="text-emerald-400 flex items-center gap-1 font-semibold">
+                            <ShieldCheck size={13} /> Verified Safe
+                          </span>
+                        )}
+                        {msg.fileInfo.status === "rejected" && (
+                          <span className="text-rose-400 flex items-center gap-1 font-semibold">
+                            <ShieldAlert size={13} /> Blocked
+                          </span>
+                        )}
+                      </div>
+                    )}
 
-                  {msg.link && (
-                    <a
-                      href={msg.link.url}
-                      target="_blank"
-                      rel="noreferrer"
-                      className="inline-flex items-center gap-1 text-cyan-400 hover:underline mt-1.5 font-semibold"
-                    >
-                      {msg.link.label} <ExternalLink size={11} />
-                    </a>
-                  )}
+                    {msg.link && (
+                      <a
+                        href={msg.link.url}
+                        target="_blank"
+                        rel="noreferrer"
+                        className="inline-flex items-center gap-1 text-cyan-400 hover:underline mt-1.5 font-semibold"
+                      >
+                        {msg.link.label} <ExternalLink size={11} />
+                      </a>
+                    )}
+                  </div>
                 </div>
-              </div>
-            ))}
-            <div ref={messagesEndRef} />
+              ))}
+              <div ref={messagesEndRef} />
+            </div>
           </div>
 
           {/* Input Panel */}
-          <div className="p-2.5 bg-slate-900/80 border-t border-slate-800 flex items-center gap-2">
+          <div className="p-2.5 bg-slate-900/90 border-t border-slate-800 flex items-center gap-2 relative z-10 backdrop-blur-md">
             <input
               type="file"
               ref={fileInputRef}
