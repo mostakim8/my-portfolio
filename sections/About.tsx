@@ -11,17 +11,36 @@ import {
   GraduationCap,
 } from "lucide-react";
 
-//import project data  
+// Import project data
 import { PROJECT_DATA } from "./Projects";
 
+// Types
+type DetailedItem = {
+  name: string;
+  icon: string;
+  detail?: string;
+};
+
+type AchievementItem = {
+  headline: string;
+  img: string;
+};
+
+type TabContent = {
+  title: string;
+  icon: React.ReactNode;
+  content: string;
+  items: (string | DetailedItem | AchievementItem)[];
+};
+
 const About = () => {
-  const [activeTab, setActiveTab] = useState("journey");
+  const [activeTab, setActiveTab] = useState<string>("journey");
   const [selectedAchievement, setSelectedAchievement] = useState<number | null>(
     null,
   );
-  const [isExpanded, setIsExpanded] = useState(false);
+  const [isExpanded, setIsExpanded] = useState<boolean>(false);
 
-  //  Real-time Dynamic Date & Project Calculation
+  // Real-time Dynamic Date & Project Calculation
   const { learningYears, intensiveMonths, totalProjects } = useMemo(() => {
     const journeyStartDate = new Date("2022-05-02");
     const intensiveStartDate = new Date("2024-06-01");
@@ -34,7 +53,7 @@ const About = () => {
       (today.getFullYear() - intensiveStartDate.getFullYear()) * 12 +
       (today.getMonth() - intensiveStartDate.getMonth());
 
-    const projectsCount = PROJECT_DATA.length;
+    const projectsCount = PROJECT_DATA ? PROJECT_DATA.length : 0;
 
     return {
       learningYears: years,
@@ -43,12 +62,13 @@ const About = () => {
     };
   }, []);
 
-  const tabData: any = {
+  const tabData: Record<string, TabContent> = {
     journey: {
       title: "Programming Journey",
       icon: <Code size={18} />,
-      content: `My foundation in computing began at AIUB with C++ and Java, which sharpened my problem-solving core. However, my passion for the web led me to self-study HTML, CSS, and Tailwind. To bridge the gap to professional development, I completed a ${intensiveMonths}-month intensive grind at Programming Hero, where I mastered the MERN stack. Over the last ${learningYears} years, I've evolved into a developer who loves building scalable, real-world solutions.`,
+      content: `My foundation in computing began at AIUB with C++ and Java, which sharpened my problem-solving core. However, my passion for the web led me to self-study HTML, CSS, and Tailwind. To bridge the gap to professional development, I completed a ${intensiveMonths}-month intensive program at Programming Hero, where I mastered the MERN stack. Over the last ${learningYears} years, I've evolved into a developer who loves building scalable, real-world solutions.`,
       items: [
+        "Frontend-Focused Full-Stack Developer",
         "MERN Stack Developer",
         "Problem Solver",
         "Self-Taught Specialist",
@@ -61,7 +81,7 @@ const About = () => {
         "I am currently focused on my academic growth alongside my professional development in software engineering at AIUB.",
       items: [
         { name: "B.Sc in CSE", icon: "🎓", detail: "AIUB (2022 - Present)" },
-        { name: "Focus Areas", icon: "🎯 ", detail: "Web Development" },
+        { name: "Web Development", icon: "🎯", detail: "Programming Hero" },
       ],
     },
     skills: {
@@ -71,7 +91,7 @@ const About = () => {
         "I thrive in the React ecosystem. My focus is on building high-performance web experiences using Next.js, TypeScript, and Tailwind CSS, while keeping the backend efficient and secure.",
       items: [
         { name: "React.js & Next.js", icon: "⚛️" },
-        { name: "TypeScript", icon: " 🔷 " },
+        { name: "TypeScript", icon: "🔷" },
         { name: "Tailwind CSS", icon: "🎨" },
         { name: "Node.js", icon: "🟢" },
         { name: "MongoDB", icon: "🍃" },
@@ -84,10 +104,10 @@ const About = () => {
       content:
         "When I'm not debugging, you'll find me on the tracks. I'm an endurance runner who recently finished a half marathon in 2 hours. I believe the discipline of training 5 days a week makes me a better, more focused developer.",
       items: [
-        { name: "Late-Night Coding", icon: "🌙" },
         { name: "Traveling & Exploring", icon: "🌍" },
         { name: "Football Tactics", icon: "⚽" },
         { name: "Reading Tech Blogs", icon: "📖" },
+        { name: "Late-Night Coding", icon: "🌙" },
       ],
     },
     achievement: {
@@ -100,15 +120,19 @@ const About = () => {
           headline: "Full Stack Web - Programming Hero",
           img: "/Achievement /Web.png",
         },
-        { headline: "IT Essentials - CISCO", img: "/Achievement /CISCO.png" },
+        {
+          headline: "Frontend Developer (React) -HackerRank",
+          img: "/Achievement /Frontend Dev.png",
+        },
         {
           headline: "Responsive Web Design - FreeCodeCamp",
           img: "/Achievement /Responsive_Web_ Design.png",
         },
-        { headline: "Google Ads - Coursera", img: "/Achievement /SEO.png" },
+        { headline: "IT Essentials - CISCO", 
+          img: "/Achievement /CISCO.png" },
         {
-          headline: "Data Analysis - Coursera",
-          img: "/Achievement /Data_Anlaysis Using_Excel.png",
+          headline: "Google Ads - Coursera",
+          img: "/Achievement /SEO.png",
         },
       ],
     },
@@ -117,37 +141,40 @@ const About = () => {
   return (
     <section
       id="about"
-      className="py-16 md:py-24 px-6 md:px-12 lg:px-24 bg-white dark:bg-slate-950 transition-colors duration-500 overflow-hidden"
+      className="py-16 md:py-24 px-4 sm:px-6 md:px-12 lg:px-20 bg-slate-50 dark:bg-slate-950 transition-colors duration-500 overflow-hidden"
     >
-      <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-start">
+      <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-14 items-start">
         {/* Left Side: Introduction */}
-        <div className="lg:col-span-5 space-y-8 text-center lg:text-left">
+        <div className="lg:col-span-5 space-y-6 text-left">
           <motion.div
             initial={{ opacity: 0, x: -20 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
+            transition={{ duration: 0.5 }}
           >
-            <h2 className="text-4xl md:text-5xl lg:text-6xl font-black tracking-tighter text-brand-darkest dark:text-white italic leading-tight">
-              About <span className="text-brand-medium not-italic">Me</span>
+            <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-black tracking-tight text-slate-900 dark:text-white italic leading-tight">
+              About <span className="text-cyan-500 not-italic">Me</span>
             </h2>
-            <div className="h-1.5 w-20 bg-brand-medium mt-4 mx-auto lg:mx-0 rounded-full" />
+            <div className="h-1.5 w-20 bg-cyan-500 mt-3 rounded-full" />
           </motion.div>
 
-          <div className="text-base md:text-lg text-slate-600 dark:text-slate-300 leading-relaxed font-medium text-justify">
+          <div className="text-sm sm:text-base md:text-lg text-slate-600 dark:text-slate-300 leading-relaxed font-normal text-justify">
             <p className="inline">
               Hi, I&apos;m{" "}
-              <span className="text-brand-darkest dark:text-white font-bold">
-                Mostakim
+              <span className="text-slate-900 dark:text-white font-bold">
+                Mostakim.
               </span>
-              . I&apos;m a Full Stack Web Developer and a CSE student at AIUB.
-              While university taught me the fundamentals with C++ and Java, I
-              spent my free time mastering modern web technologies.
+              <br />
+              I&apos;m a Computer Science student at AIUB and a Frontend-Focused
+              Full-Stack Developer dedicated to building web applications that
+              are practical, intuitive, and efficient.
             </p>
 
             {!isExpanded && (
               <button
+                type="button"
                 onClick={() => setIsExpanded(true)}
-                className="text-brand-medium font-bold hover:underline inline-flex items-center gap-1 ml-1"
+                className="text-cyan-600 dark:text-cyan-400 font-bold hover:underline inline-flex items-center gap-1 ml-1 cursor-pointer transition-colors"
               >
                 See More...
               </button>
@@ -156,65 +183,45 @@ const About = () => {
             <AnimatePresence>
               {isExpanded && (
                 <motion.span
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  exit={{ opacity: 0 }}
-                  className="inline"
+                  initial={{ opacity: 0, height: 0 }}
+                  animate={{ opacity: 1, height: "auto" }}
+                  exit={{ opacity: 0, height: 0 }}
+                  transition={{ duration: 0.3 }}
+                  className="block"
                 >
                   <span className="block mt-4">
-                    My journey started in 2022 with self-study. To sharpen my
-                    skills, I completed an intensive 7-month program at
-                    <span className="text-brand-medium font-bold ml-1">
-                      Programming Hero
-                    </span>
-                    , where I spent 8 to 10 hours daily mastering the
-                    <span className="text-brand-medium font-bold ml-1">
-                      MERN stack
-                    </span>
-                    . This experience turned my passion into professional
-                    expertise.
+                    I am interested in building digital products that solve real
+                    problems and deliver smooth user experiences. I enjoy
+                    understanding user workflows before architectural design.
+                    When starting a project, I break complex features into
+                    modular, manageable tasks to choose the optimal approach.
                   </span>
 
                   <span className="block mt-4">
-                    Beyond coding, I am certified in
-                    <span className="text-brand-medium font-bold ml-1">
-                      {" "}
-                      Responsive Web Design{" "}
+                    My core expertise centers on frontend development with{" "}
+                    <span className="text-cyan-600 dark:text-cyan-400 font-semibold">
+                      React, Next.js, TypeScript, and Tailwind CSS
                     </span>
-                    from freeCodeCamp. I also believe in a data-driven approach,
-                    earning professional certifications in
-                    <span className="text-brand-medium font-bold ml-1">
-                      {" "}
-                      Data Analysis{" "}
+                    , where I focus on responsive interfaces and modular design.
+                    I also bring practical experience in{" "}
+                    <span className="text-cyan-600 dark:text-cyan-400 font-semibold">
+                      Node.js, Express.js, and MongoDB
                     </span>
-                    and
-                    <span className="text-brand-medium font-bold ml-1">
-                      {" "}
-                      Google Ads{" "}
-                    </span>
-                    via Coursera. This mix helps me build apps that are both
-                    functional and business-focused.
+                    , enabling smooth full-stack integration.
                   </span>
 
                   <span className="block mt-4">
-                    Currently, I focus on building clean and scalable
-                    applications using
-                    <span className="text-brand-medium font-bold">
-                      {" "}
-                      TypeScript{" "}
-                    </span>
-                    and
-                    <span className="text-brand-medium font-bold">
-                      {" "}
-                      Next.js{" "}
-                    </span>
-                    . I love solving real-world problems with simple,
-                    user-friendly designs.
+                    Continuous learning is central to my process—building
+                    projects, evaluating feedback, and refining performance. I
+                    am looking to contribute to a collaborative engineering team
+                    where I can deliver impactful features while expanding my
+                    technical depth.
                   </span>
 
                   <button
+                    type="button"
                     onClick={() => setIsExpanded(false)}
-                    className="text-brand-medium font-bold hover:underline inline-flex items-center gap-1 mt-2"
+                    className="text-cyan-600 dark:text-cyan-400 font-bold hover:underline inline-flex items-center gap-1 mt-3 cursor-pointer transition-colors"
                   >
                     See Less
                   </button>
@@ -222,80 +229,80 @@ const About = () => {
               )}
             </AnimatePresence>
           </div>
-
-          <div className="grid grid-cols-2 gap-4 md:gap-6 pt-4">
-            {[
-              { label: "Projects Built", value: `${totalProjects}+` },
-              { label: "Years Experience", value: `${learningYears}+` },
-            ].map((stat, i) => (
-              <motion.div
-                key={i}
-                whileHover={{ y: -5 }}
-                className="p-5 md:p-6 border border-brand-light/20 rounded-[2rem] bg-slate-50 dark:bg-slate-900/50 backdrop-blur-sm"
-              >
-                <h4 className="text-2xl md:text-3xl font-black text-brand-medium">
-                  {stat.value}
-                </h4>
-                <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-slate-500 mt-2">
-                  {stat.label}
-                </p>
-              </motion.div>
-            ))}
-          </div>
         </div>
 
         {/* Right Side: Interactive Tabs */}
-        <div className="lg:col-span-7 w-full bg-white dark:bg-slate-900/40 rounded-[2.5rem] border border-brand-light/10 shadow-2xl overflow-hidden backdrop-blur-md">
-          <div className="flex overflow-x-auto gap-1 p-3 bg-slate-50 dark:bg-slate-950/50 scrollbar-hide border-b border-brand-light/10">
+        <div className="lg:col-span-7 w-full bg-white dark:bg-slate-900/60 rounded-3xl border border-slate-200 dark:border-slate-800 shadow-xl overflow-hidden backdrop-blur-md">
+          {/* Tab Headers Navigation */}
+          <div className="flex overflow-x-auto gap-2 p-3 bg-slate-100/80 dark:bg-slate-950/60 scrollbar-none border-b border-slate-200 dark:border-slate-800/80">
             {Object.keys(tabData).map((tab) => (
               <button
                 key={tab}
+                type="button"
                 onClick={() => {
                   setActiveTab(tab);
                   setSelectedAchievement(null);
                 }}
-                className={`flex items-center gap-2 mx-1 px-5 py-3 rounded-2xl text-[10px] md:text-xs font-black uppercase transition-all duration-300 ${activeTab === tab ? "bg-brand-medium text-white shadow-lg shadow-brand-medium/20 scale-105" : "text-slate-500 hover:bg-brand-light/10"}`}
+                className={`flex items-center gap-2 px-4 py-2.5 rounded-xl text-xs md:text-xs font-bold uppercase tracking-wider transition-all duration-200 whitespace-nowrap cursor-pointer ${
+                  activeTab === tab
+                    ? "bg-cyan-500 text-white shadow-md shadow-cyan-500/20 scale-[1.02]"
+                    : "text-slate-600 dark:text-slate-400 hover:bg-slate-200/60 dark:hover:bg-slate-800/60 hover:text-slate-900 dark:hover:text-white"
+                }`}
               >
-                {tabData[tab].icon} {tab}
+                {tabData[tab].icon}
+                <span>{tab}</span>
               </button>
             ))}
           </div>
 
-          <div className="p-8 md:p-10 min-h-[400px]">
+          {/* Tab Body */}
+          <div className="p-6 sm:p-8 md:p-10 min-h-[380px]">
             <AnimatePresence mode="wait">
               <motion.div
                 key={activeTab}
-                initial={{ opacity: 0, y: 10 }}
+                initial={{ opacity: 0, y: 8 }}
                 animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -10 }}
-                transition={{ duration: 0.3 }}
+                exit={{ opacity: 0, y: -8 }}
+                transition={{ duration: 0.25 }}
               >
-                <h3 className="text-2xl md:text-3xl font-bold mb-5 text-brand-darkest dark:text-white">
+                <h3 className="text-xl sm:text-2xl md:text-3xl font-bold mb-4 text-slate-900 dark:text-white">
                   {tabData[activeTab].title}
                 </h3>
-                <p className="text-sm md:text-base text-justify text-slate-600 dark:text-slate-300 mb-8 leading-relaxed font-medium">
+                <p className="text-xs sm:text-sm md:text-base text-justify text-slate-600 dark:text-slate-300 mb-6 leading-relaxed font-normal">
                   {tabData[activeTab].content}
                 </p>
 
                 {activeTab === "achievement" ? (
                   <div className="space-y-3">
-                    {tabData.achievement.items.map(
-                      (item: any, index: number) => (
-                        <div key={index} className="overflow-hidden">
+                    {(tabData.achievement.items as AchievementItem[]).map(
+                      (item, index) => (
+                        <div
+                          key={index}
+                          className="rounded-2xl overflow-hidden border border-slate-200 dark:border-slate-800"
+                        >
                           <button
+                            type="button"
                             onClick={() =>
                               setSelectedAchievement(
                                 selectedAchievement === index ? null : index,
                               )
                             }
-                            className={`w-full flex items-center justify-between p-5 rounded-2xl border transition-all ${selectedAchievement === index ? "bg-brand-medium/10 border-brand-medium" : "bg-slate-50 dark:bg-slate-800/50 border-brand-light/10 hover:border-brand-medium/50"}`}
+                            className={`w-full flex items-center justify-between p-4 sm:p-5 transition-colors cursor-pointer text-left ${
+                              selectedAchievement === index
+                                ? "bg-cyan-500/10 border-cyan-500/30"
+                                : "bg-slate-50 dark:bg-slate-800/40 hover:bg-slate-100 dark:hover:bg-slate-800/80"
+                            }`}
                           >
-                            <span className="font-bold text-sm dark:text-slate-200">
+                            <span className="font-semibold text-xs sm:text-sm text-slate-800 dark:text-slate-200">
                               {item.headline}
                             </span>
                             <ChevronRight
                               size={18}
-                              className={`transition-transform duration-300 ${selectedAchievement === index ? "rotate-90 text-brand-medium" : "text-slate-400"}`}
+                              className={`transition-transform duration-300 shrink-0 ${
+                                selectedAchievement === index
+                                  ? "rotate-90 text-cyan-500"
+                                  : "text-slate-400"
+                              }`}
                             />
                           </button>
                           <AnimatePresence>
@@ -304,12 +311,13 @@ const About = () => {
                                 initial={{ height: 0, opacity: 0 }}
                                 animate={{ height: "auto", opacity: 1 }}
                                 exit={{ height: 0, opacity: 0 }}
-                                className="bg-slate-100 dark:bg-slate-800/80 rounded-b-2xl p-4"
+                                transition={{ duration: 0.25 }}
+                                className="bg-slate-100 dark:bg-slate-900/90 p-4 border-t border-slate-200 dark:border-slate-800"
                               >
                                 <img
                                   src={item.img}
                                   alt={item.headline}
-                                  className="rounded-xl w-full h-auto shadow-inner border border-white/10"
+                                  className="rounded-xl w-full h-auto object-cover shadow-sm"
                                 />
                               </motion.div>
                             )}
@@ -319,26 +327,30 @@ const About = () => {
                     )}
                   </div>
                 ) : (
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                    {tabData[activeTab].items?.map((item: any, i: number) => (
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
+                    {tabData[activeTab].items?.map((item, i) => (
                       <motion.div
                         key={i}
-                        whileHover={{ scale: 1.02 }}
-                        className="p-4 bg-slate-50 dark:bg-slate-800/50 rounded-2xl border border-brand-light/10 font-bold text-xs md:text-sm text-slate-700 dark:text-slate-200 flex items-center gap-4 group"
+                        whileHover={{ scale: 1.01 }}
+                        className="p-3.5 sm:p-4 bg-slate-50 dark:bg-slate-800/40 rounded-2xl border border-slate-200 dark:border-slate-800 font-semibold text-xs sm:text-sm text-slate-800 dark:text-slate-200 flex items-center gap-3 group"
                       >
                         {typeof item === "string" ? (
                           <>
-                            <div className="w-2.5 h-2.5 rounded-full bg-brand-medium group-hover:scale-125 transition-transform" />
-                            {item}
+                            <div className="w-2 h-2 rounded-full bg-cyan-500 group-hover:scale-125 transition-transform shrink-0" />
+                            <span>{item}</span>
                           </>
                         ) : (
                           <div className="flex items-center gap-3">
-                            <span className="text-xl">{item.icon}</span>
+                            <span className="text-lg sm:text-xl shrink-0">
+                              {(item as DetailedItem).icon}
+                            </span>
                             <div className="flex flex-col">
-                              <span>{item.name}</span>
-                              {item.detail && (
-                                <span className="text-[10px] text-slate-500 font-medium tracking-tight">
-                                  {item.detail}
+                              <span className="leading-snug">
+                                {(item as DetailedItem).name}
+                              </span>
+                              {(item as DetailedItem).detail && (
+                                <span className="text-[10px] sm:text-xs text-slate-500 dark:text-slate-400 font-normal mt-0.5">
+                                  {(item as DetailedItem).detail}
                                 </span>
                               )}
                             </div>

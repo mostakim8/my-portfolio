@@ -1,28 +1,35 @@
 "use client";
 
-import React,{useState} from "react";
-import { motion } from "framer-motion";
+import React, { useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
 import Image from "next/image";
-import { ExternalLink, Github, ArrowUpRight, Projector, LucideProjector } from "lucide-react";
+import {
+  ExternalLink,
+  Github,
+  X,
+  ChevronLeft,
+  ChevronRight,
+  LucideProjector,
+} from "lucide-react";
 
-
-// Interface definition
 interface Project {
   image: string;
   title: string;
   description: string;
   techStack: string[];
   keyChallenges: string;
+  problemSolution: string;
+  technicalDiscussion: string;
+  whatILearned: string;
   links: { live: string; github: string };
 }
 
-// Exporting PROJECT_DATA
 export const PROJECT_DATA: Project[] = [
   {
     image: "/Projects Img/Asset_Verse.png",
-    title: "AssetVerse–Smart Corporate Asset Management",
+    title: "AssetVerse – Smart Corporate Asset Management",
     description:
-      "I built this B2B SaaS platform to bridge the gap between HR Managers and Employees. It simplifies how companies track their equipment, manage requests, and monitor stock levels in real-time, moving away from messy spreadsheets to a streamlined digital dashboard.",
+      "I built this B2B SaaS platform to bridge the gap between HR Managers and Employees. It simplifies how companies track equipment, manage requests, and monitor stock levels in real-time.",
     techStack: [
       "React.js",
       "Tailwind CSS",
@@ -34,7 +41,13 @@ export const PROJECT_DATA: Project[] = [
       "TanStack Query",
     ],
     keyChallenges:
-      "The toughest part was a complex data synchronization bug in the real-time tracking system. It was frustrating, but I didn't give up—after 18 days of persistent debugging and refactoring my state management logic, I finally ensured 100% data accuracy across all user roles.",
+      "A complex data synchronization bug in the real-time tracking system required persistent debugging and state refactoring to achieve 100% data accuracy across user roles.",
+    problemSolution:
+      "Companies struggle with asset tracking via spreadsheets, leading to lost inventory. AssetVerse automates approval workflows and real-time inventory tracking.",
+    technicalDiscussion:
+      "Built with MERN architecture using TanStack Query for server-state management, dynamic PDF report generation, and secure Stripe billing integration.",
+    whatILearned:
+      "Mastered deep asynchronous state debugging, role-based security patterns, and scalable database architecture for corporate SaaS products.",
     links: {
       live: "https://inspiring-medovik-fc9331.netlify.app",
       github:
@@ -45,7 +58,7 @@ export const PROJECT_DATA: Project[] = [
     image: "/Projects Img/AI Model.png",
     title: "AI Model Inventory & Marketplace",
     description:
-      "A sophisticated full-stack platform built with the MERN stack for discovering and managing AI models. It features a secure marketplace with real-time inventory tracking, multi-role dashboards, and seamless payment integration for a premium user experience.",
+      "A full-stack platform built for discovering and managing AI models with real-time tracking, multi-role dashboards, and seamless payment integration.",
     techStack: [
       "React",
       "Node.js",
@@ -60,20 +73,24 @@ export const PROJECT_DATA: Project[] = [
       "Axios",
     ],
     keyChallenges:
-      "Engineered a robust synchronization layer between Firestore's real-time listeners and local React state to ensure zero-latency inventory updates.",
+      "Engineered a synchronization layer between Firestore's real-time listeners and local React state to ensure zero-latency inventory updates.",
+    problemSolution:
+      "Developers lack a centralized ecosystem to test, track, and license custom AI models easily.",
+    technicalDiscussion:
+      "Utilized Firestore real-time dynamic sync combined with MongoDB aggregation pipelines for performant querying and filtering.",
+    whatILearned:
+      "Learned how to harmonize NoSQL databases with real-time state listeners while keeping client-side bundle sizes lean.",
     links: {
       live: "https://dulcet-fox-ad01e1.netlify.app/app",
       github:
         "https://github.com/mostakim8/clinet-side-ai-model-inventory-manager-ms010a010.git",
-      // server:
-      //   "https://github.com/mostakim8/-server-side-aI-model-inventory-manager-ms010a010-.git",
     },
   },
   {
     image: "/Projects Img/CSTicketSystem.png",
     title: "CS Ticket System",
     description:
-      "A pixel-perfect, modern customer support dashboard designed to manage the ticket lifecycle (Open, In-Progress, Resolved). It prevents work duplication and enhances team productivity.",
+      "A modern customer support dashboard designed to manage the ticket lifecycle (Open, In-Progress, Resolved) efficiently.",
     techStack: [
       "React.js",
       "Tailwind CSS",
@@ -82,193 +99,276 @@ export const PROJECT_DATA: Project[] = [
       "JavaScript (ES6+)",
     ],
     keyChallenges:
-      "The primary challenges of this project involved filtering tickets across various columns through real-time state synchronization and successfully resolving 'Invalid Hook Call' errors resulting from environmental conflicts.",
+      "Filtering tickets across various columns through real-time state synchronization and resolving environment hook conflicts.",
+    problemSolution:
+      "Support teams face work duplication when multiple agents tackle the same client ticket simultaneously.",
+    technicalDiscussion:
+      "Implemented client-side reactive filtering and persistent storage models with optimized re-rendering logic.",
+    whatILearned:
+      "Strengthened advanced React hook lifecycles, state isolation, and UI layout optimization.",
     links: {
       live: "https://friendly-crepe-f0261b.netlify.app",
       github:
         "https://github.com/mostakim8/Joruri_Seba_Emergency_Service_MS05A05_PH.git",
     },
   },
-  // {
-  //   image: "/Projects Img/GamingHub.png",
-  //   title: "Gaming Hub",
-  //   description:
-  //     "An immersive gaming platform integrating multiple APIs for real-time stats, global leaderboards, and community-driven game ratings.",
-  //   techStack: ["React", "Tailwind", "JS"],
-  //   links: {
-  //     live: "https://transcendent-haupia-e0ed5a.netlify.app",
-  //     github: "https://github.com/mostakim-aiub/gaming-hub",
-  //   },
-  // },
 ];
 
 const Projects = () => {
+  const [currentIndex, setCurrentIndex] = useState<number>(0);
+  const [selectedProject, setSelectedProject] = useState<Project | null>(null);
 
-  const [expandedIndex, setExpandedIndex] = useState<number | null>(null);
+  const handlePrev = () => {
+    setCurrentIndex((prev) =>
+      prev === 0 ? PROJECT_DATA.length - 1 : prev - 1,
+    );
+  };
+
+  const handleNext = () => {
+    setCurrentIndex((prev) =>
+      prev === PROJECT_DATA.length - 1 ? 0 : prev + 1,
+    );
+  };
+
+  const prevIndex =
+    (currentIndex - 1 + PROJECT_DATA.length) % PROJECT_DATA.length;
+  const nextIndex = (currentIndex + 1) % PROJECT_DATA.length;
+  const currentProject = PROJECT_DATA[currentIndex];
 
   return (
     <section
       id="projects"
-      className="py-16 md:py-24 bg-white dark:bg-slate-950 transition-colors duration-500"
+      className="py-16 md:py-24 bg-slate-950 text-slate-100 transition-colors duration-500 overflow-hidden relative"
     >
-      <div className="max-w-7xl mx-auto px-6 md:px-12 lg:px-24">
-        {/* Section Header */}
-        <div className="text-center mb-16 px-4">
-          {/* Main Title */}
-          <h2 className="text-4xl md:text-5xl font-black tracking-tighter  text-slate-900 dark:text-white">
-            {" "}
-            <span className="text-brand-medium not-italic">Projects</span>
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        {/* Header */}
+        <div className="text-center mb-10 md:mb-16">
+          <h2 className="text-3xl sm:text-4xl md:text-5xl font-black tracking-tight text-white">
+            Featured <span className="text-cyan-400">Projects</span>
           </h2>
-
-          {/* Your Chosen Subtitle */}
-          <motion.p
-            initial={{ opacity: 0, y: 10 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.2 }}
-            viewport={{ once: true }}
-            className="max-w-xl mx-auto mt-4 text-sm md:text-base text-slate-600 dark:text-slate-400 font-medium leading-relaxed"
-          >
-            A collection of my{" "}
-            <span className="text-brand-medium font-bold italic">favorite</span>{" "}
-            projects. Each one was a new challenge that helped me become a{" "}
-            <span className="text-brand-medium font-bold italic">
-              better developer
-            </span>{" "}
-            and designer.
-          </motion.p>
+          <p className="max-w-xl mx-auto mt-3 text-xs sm:text-sm md:text-base text-slate-400 font-medium">
+            Click on the main project card to inspect key technical insights,
+            architectural challenges, and solutions.
+          </p>
         </div>
 
-        {/* Projects Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-8 mb-16 w-full">
-          {PROJECT_DATA.map((project, index) => (
-            <motion.div
-              key={index}
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: index * 0.1, duration: 0.5 }}
-              className="group relative w-full h-[480px] md:h-[400px] rounded-[2.5rem] overflow-hidden border border-brand-light/20 shadow-lg bg-slate-100 dark:bg-slate-900"
+        {/* Canvas Area */}
+        <div className="relative w-full max-w-5xl mx-auto flex flex-col items-center">
+          {/* Main Visual Carousel Workspace */}
+          <div className="relative w-full min-h-[380px] sm:min-h-[460px] md:min-h-[520px] flex items-center justify-center my-4">
+            {/* PREVIOUS CARD (Desktop Only) */}
+            <div
+              onClick={handlePrev}
+              className="hidden lg:flex absolute left-0 top-4 z-10 w-[200px] h-[150px] rounded-2xl overflow-hidden border border-slate-800 opacity-60 hover:opacity-100 transition-all cursor-pointer shadow-2xl group hover:scale-105 bg-slate-900"
             >
-              {/* Project Image */}
               <Image
-                src={project.image}
-                alt={project.title}
+                src={PROJECT_DATA[prevIndex].image}
+                alt="Previous Project"
                 fill
-                className="object-fill transition-transform duration-700 group-hover:scale-110"
-                // sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                className="object-cover object-top grayscale group-hover:grayscale-0 transition-all duration-300"
               />
-
-              {/* Overlay Content */}
-              <div className="absolute inset-0 bg-brand-darkest/95 backdrop-blur-md opacity-0 group-hover:opacity-90 transition-all duration-500 p-6 md:p-8 flex flex-col justify-center items-center">
-                <motion.div
-                  initial={{ y: 20, opacity: 0 }}
-                  whileInView={{ y: 0, opacity: 1 }}
-                  className="w-full flex flex-col items-center"
-                >
-                  <h3 className="text-lg md:text-xl font-black text-white mb-3 uppercase tracking-tighter text-center">
-                    {project.title}
-                  </h3>
-
-                  {/* Content Area */}
-                  <div className="w-full flex flex-col gap-4">
-                    {/* 1. Description with See More */}
-                    <div className="relative">
-                      <p
-                        className={`text-[11px] md:text-xs text-slate-200 leading-relaxed text-justify ${expandedIndex !== index ? "line-clamp-3" : ""}`}
-                      >
-                        {project.description}
-                      </p>
-                      {project.description.length > 100 && (
-                        <button
-                          onClick={(e) => {
-                            e.preventDefault();
-                            setExpandedIndex(
-                              expandedIndex === index ? null : index,
-                            );
-                          }}
-                          className="text-brand-medium text-[10px] font-black mt-1 hover:text-white transition-colors uppercase tracking-wider"
-                        >
-                          {expandedIndex === index
-                            ? "Show Less"
-                            : "See More..."}
-                        </button>
-                      )}
-                    </div>
-
-                    {/* 2. Key Challenge with Independent Scroll */}
-                    <div className="bg-white/5 p-3 rounded-2xl border border-white/10 text-justify">
-                      <span className="font-black not-italic text-[10px] text-white block mb-1 underline decoration-brand-medium uppercase tracking-widest">
-                        Key Challenge:
-                      </span>
-                      <div className="max-h-[80px] overflow-y-auto pr-2 custom-scrollbar">
-                        <p className="text-[10px] md:text-[11px] text-brand-light italic leading-snug">
-                          {project.keyChallenges}
-                        </p>
-                      </div>
-                    </div>
-                  </div>
-
-                  {/* Tech Stack */}
-                  <div className="flex flex-wrap justify-center gap-1.5 mb-6 mt-4">
-                    {project.techStack.slice(0, 5).map((tech, i) => (
-                      <span
-                        key={i}
-                        className="text-[8px] font-bold uppercase px-2.5 py-1 bg-white/10 text-brand-light border border-white/5 rounded-full"
-                      >
-                        {tech}
-                      </span>
-                    ))}
-                  </div>
-
-                  {/* Links Section remains same */}
-                  <div className="flex gap-3 justify-center w-full">
-                    <a
-                      href={project.links.live}
-                      target="_blank"
-                      rel="noreferrer"
-                      className="flex-1 flex items-center justify-center gap-2 px-5 py-2.5 bg-brand-medium text-white rounded-full text-[10px] font-black uppercase hover:bg-white hover:text-brand-medium transition-all max-w-[120px]"
-                    >
-                      <ExternalLink size={12} /> Live
-                    </a>
-                    <a
-                      href={project.links.github}
-                      target="_blank"
-                      rel="noreferrer"
-                      className="flex-1 flex items-center justify-center gap-2 px-5 py-2.5 bg-white/10 text-white border border-white/20 rounded-full text-[10px] font-black uppercase hover:bg-white hover:text-brand-darkest transition-all max-w-[120px]"
-                    >
-                      <Github size={12} /> Code
-                    </a>
-                  </div>
-                </motion.div>
+              <div className="absolute inset-0 bg-slate-950/70 flex items-center justify-center">
+                <span className="text-[10px] font-mono font-bold uppercase tracking-widest text-cyan-300 bg-slate-900/90 px-3 py-1 rounded-full border border-slate-700">
+                  Prev Project
+                </span>
               </div>
-            </motion.div>
-          ))}
+            </div>
+
+            {/* CURRENT MAIN PROJECT CARD */}
+            <div className="z-20 w-full max-w-[320px] sm:max-w-[420px] md:max-w-[480px] h-[280px] sm:h-[360px] md:h-[420px] relative">
+              <motion.div
+                key={currentIndex}
+                initial={{ scale: 0.95, opacity: 0 }}
+                animate={{ scale: 1, opacity: 1 }}
+                transition={{ duration: 0.3 }}
+                onClick={() => setSelectedProject(currentProject)}
+                className="w-full h-full rounded-2xl sm:rounded-3xl overflow-hidden border border-cyan-500/40 shadow-[0_0_40px_rgba(6,182,212,0.15)] relative bg-slate-900 cursor-pointer group"
+              >
+                <Image
+                  src={currentProject.image}
+                  alt={currentProject.title}
+                  fill
+                  priority
+                  className="object-cover object-top transition-transform duration-500 group-hover:scale-105"
+                />
+
+                {/* Overlay */}
+                <div className="absolute inset-0 bg-slate-950/60 backdrop-blur-[2px] opacity-0 group-hover:opacity-100 transition-all duration-300 flex flex-col items-center justify-center p-6 text-center">
+                  <span className="text-xs font-bold text-slate-900 bg-cyan-400 px-4 py-2 rounded-full shadow-lg font-mono">
+                    View Technical Details
+                  </span>
+                </div>
+
+                {/* Title Badge */}
+                <div className="absolute top-3 left-3 right-3 bg-slate-950/80 backdrop-blur-md px-3.5 py-2 rounded-xl border border-slate-800/80">
+                  <h3 className="text-xs sm:text-sm font-bold text-white tracking-wide truncate">
+                    {currentProject.title}
+                  </h3>
+                </div>
+              </motion.div>
+            </div>
+
+            {/* NEXT CARD (Desktop Only) */}
+            <div
+              onClick={handleNext}
+              className="hidden lg:flex absolute right-0 bottom-4 z-10 w-[200px] h-[150px] rounded-2xl overflow-hidden border border-slate-800 opacity-60 hover:opacity-100 transition-all cursor-pointer shadow-2xl group hover:scale-105 bg-slate-900"
+            >
+              <Image
+                src={PROJECT_DATA[nextIndex].image}
+                alt="Next Project"
+                fill
+                className="object-cover object-top grayscale group-hover:grayscale-0 transition-all duration-300"
+              />
+              <div className="absolute inset-0 bg-slate-950/70 flex items-center justify-center">
+                <span className="text-[10px] font-mono font-bold uppercase tracking-widest text-cyan-300 bg-slate-900/90 px-3 py-1 rounded-full border border-slate-700">
+                  Next Project
+                </span>
+              </div>
+            </div>
+          </div>
+
+          {/* PROJECT METADATA & LINKS BAR */}
+          <div className="w-full max-w-[320px] sm:max-w-[420px] md:max-w-[480px] lg:max-w-none flex flex-col lg:flex-row items-center justify-between gap-4 mt-2 px-1">
+            {/* Live & Git Links */}
+            <div className="flex items-center gap-3 bg-slate-900/90 backdrop-blur-md border border-slate-800 px-4 py-2 rounded-xl shadow-lg w-full lg:w-auto justify-center">
+              <a
+                href={currentProject.links.live}
+                target="_blank"
+                rel="noreferrer"
+                className="flex items-center gap-1.5 text-xs font-bold text-slate-200 hover:text-cyan-400 transition-colors uppercase tracking-wider"
+              >
+                <ExternalLink size={14} /> Live Demo
+              </a>
+              <span className="text-slate-700 font-bold">|</span>
+              <a
+                href={currentProject.links.github}
+                target="_blank"
+                rel="noreferrer"
+                className="flex items-center gap-1.5 text-xs font-bold text-slate-200 hover:text-cyan-400 transition-colors uppercase tracking-wider"
+              >
+                <Github size={14} /> GitHub
+              </a>
+            </div>
+
+            {/* Navigation Controls (Only for Small & Medium Displays: flex lg:hidden) */}
+            <div className="flex lg:hidden items-center justify-between w-full gap-4 bg-slate-900/90 border border-slate-800 px-4 py-1.5 rounded-xl">
+              <button
+                onClick={handlePrev}
+                className="p-1.5 rounded-lg text-slate-300 hover:bg-slate-800 hover:text-cyan-400 transition-colors active:scale-95"
+                aria-label="Previous Project"
+              >
+                <ChevronLeft size={20} />
+              </button>
+              <span className="font-mono text-xs text-cyan-400 font-bold">
+                0{currentIndex + 1} / 0{PROJECT_DATA.length}
+              </span>
+              <button
+                onClick={handleNext}
+                className="p-1.5 rounded-lg text-slate-300 hover:bg-slate-800 hover:text-cyan-400 transition-colors active:scale-95"
+                aria-label="Next Project"
+              >
+                <ChevronRight size={20} />
+              </button>
+            </div>
+          </div>
+
+          {/* TECH STACK BADGES */}
+          <div className="mt-4 w-full max-w-[320px] sm:max-w-[420px] md:max-w-[480px] lg:max-w-2xl flex flex-wrap gap-1.5 justify-center bg-slate-900/60 backdrop-blur-md p-3 rounded-2xl border border-slate-800/80">
+            {currentProject.techStack.map((tech, i) => (
+              <span
+                key={i}
+                className="text-[10px] font-mono font-medium text-cyan-300 px-2.5 py-1 bg-cyan-950/40 border border-cyan-800/40 rounded-md"
+              >
+                {tech}
+              </span>
+            ))}
+          </div>
         </div>
 
-        {/* Bottom Action Buttons  */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          className="flex flex-col sm:flex-row items-center justify-center gap-6 mt-12"
-        >
+        {/* MODAL SYSTEM */}
+        <AnimatePresence>
+          {selectedProject && (
+            <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/80 backdrop-blur-md">
+              <motion.div
+                initial={{ scale: 0.9, opacity: 0 }}
+                animate={{ scale: 1, opacity: 1 }}
+                exit={{ scale: 0.9, opacity: 0 }}
+                className="bg-slate-900 border border-slate-800 w-full max-w-2xl max-h-[85vh] rounded-2xl md:rounded-3xl p-5 md:p-8 overflow-y-auto custom-scrollbar text-slate-200 relative shadow-2xl"
+              >
+                <button
+                  onClick={() => setSelectedProject(null)}
+                  className="absolute top-4 right-4 p-2 bg-slate-800/80 rounded-full hover:bg-slate-700 text-slate-300 transition-colors"
+                >
+                  <X size={18} />
+                </button>
+
+                <h3 className="text-lg md:text-2xl font-bold text-cyan-400 mb-4 pr-8">
+                  {selectedProject.title}
+                </h3>
+
+                <div className="space-y-3.5 text-xs md:text-sm">
+                  <div className="bg-slate-950/60 p-4 rounded-xl border border-slate-800">
+                    <h4 className="font-mono font-bold text-cyan-300 mb-1 uppercase text-[11px] tracking-wider">
+                      Problem & Solution
+                    </h4>
+                    <p className="text-slate-300 leading-relaxed">
+                      {selectedProject.problemSolution}
+                    </p>
+                  </div>
+
+                  <div className="bg-slate-950/60 p-4 rounded-xl border border-slate-800">
+                    <h4 className="font-mono font-bold text-cyan-300 mb-1 uppercase text-[11px] tracking-wider">
+                      Technical Architecture
+                    </h4>
+                    <p className="text-slate-300 leading-relaxed">
+                      {selectedProject.technicalDiscussion}
+                    </p>
+                  </div>
+
+                  <div className="bg-slate-950/60 p-4 rounded-xl border border-slate-800">
+                    <h4 className="font-mono font-bold text-cyan-300 mb-1 uppercase text-[11px] tracking-wider">
+                      Key Challenges & Debugging
+                    </h4>
+                    <p className="text-slate-300 leading-relaxed">
+                      {selectedProject.keyChallenges}
+                    </p>
+                  </div>
+
+                  <div className="bg-slate-950/60 p-4 rounded-xl border border-slate-800">
+                    <h4 className="font-mono font-bold text-cyan-300 mb-1 uppercase text-[11px] tracking-wider">
+                      Core Learnings
+                    </h4>
+                    <p className="text-slate-300 leading-relaxed">
+                      {selectedProject.whatILearned}
+                    </p>
+                  </div>
+                </div>
+
+                <div className="mt-6 flex justify-end">
+                  <button
+                    onClick={() => setSelectedProject(null)}
+                    className="px-5 py-2 bg-cyan-500 hover:bg-cyan-400 text-slate-950 font-bold rounded-xl text-xs transition-colors"
+                  >
+                    Close
+                  </button>
+                </div>
+              </motion.div>
+            </div>
+          )}
+        </AnimatePresence>
+
+        {/* Footer CTA */}
+        <div className="flex justify-center mt-12 md:mt-16">
           <a
             href="https://github.com/mostakim8"
             target="_blank"
             rel="noreferrer"
-            className="group flex items-center gap-3 px-8 py-4 bg-slate-900 dark:bg-white text-white dark:text-slate-900 rounded-2xl text-[10px] md:text-xs font-black uppercase tracking-widest transition-all hover:scale-105 active:scale-95 shadow-xl"
+            className="flex items-center gap-2.5 px-6 py-3.5 bg-slate-900 border border-slate-800 hover:border-cyan-500/50 text-slate-200 hover:text-cyan-400 rounded-xl text-xs font-mono font-bold uppercase tracking-wider transition-all shadow-lg hover:scale-105"
           >
-            <LucideProjector size={18} />
-            Show All Projects
+            <LucideProjector size={16} />
+            Explore All Projects on GitHub
           </a>
-
-          <a
-            href="#contact"
-            className="flex items-center gap-3 px-8 py-4 bg-white dark:bg-slate-900 text-slate-900 dark:text-white border-2 border-slate-200 dark:border-slate-800 rounded-2xl text-[10px] md:text-xs font-black uppercase tracking-widest transition-all hover:border-brand-medium active:scale-95 shadow-sm"
-          >
-            Let's Start a Project
-          </a>
-        </motion.div>
+        </div>
       </div>
     </section>
   );

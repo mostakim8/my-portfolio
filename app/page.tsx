@@ -1,12 +1,13 @@
 import Navbar from "@/components/Navbar";
 import Hero from "@/sections/Hero";
 import About from "@/sections/About";
-import TechStack from "@/sections/TechStack";
+// import TechStack from "@/sections/TechStack";
 import Skills from "@/sections/Skills";
 import Services from "@/sections/Services";
 import Projects from "@/sections/Projects";
 import Contact from "@/sections/Contact";
 import Footer from "@/sections/Footer";
+import AIChatbot from "@/components/AIChatbot";
 
 export default function Home() {
   return (
@@ -22,9 +23,9 @@ export default function Home() {
           <About />
         </section>
 
-        <section id="tech-stack">
+        {/* <section id="tech-stack">
           <TechStack />
-        </section>
+        </section> */}
 
         <section id="skills">
           <Skills />
@@ -44,6 +45,8 @@ export default function Home() {
       </div>
 
       <Footer />
+
+      <AIChatbot></AIChatbot>
     </main>
   );
 }

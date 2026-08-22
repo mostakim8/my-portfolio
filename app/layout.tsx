@@ -1,6 +1,7 @@
 // app/layout.tsx
 import type { Metadata } from "next";
 import "./globals.css";
+import AIChatbot from "@/components/AIChatbot";
 
 export const metadata: Metadata = {
   title: "Mostakim | Portfolio",
@@ -16,6 +17,7 @@ export default function RootLayout({
     <html lang="en" className="dark" style={{ scrollBehavior: "smooth" }}>
       <body className="antialiased selection:bg-brand-medium selection:text-white">
         {children}
+        <AIChatbot/>
       </body>
     </html>
   );
