@@ -66,7 +66,7 @@ const About = () => {
     journey: {
       title: "Programming Journey",
       icon: <Code size={18} />,
-      content: `My foundation in computing began at AIUB with C++ and Java, which sharpened my problem-solving core. However, my passion for the web led me to self-study HTML, CSS, and Tailwind. To bridge the gap to professional development, I completed a ${intensiveMonths}-month intensive program at Programming Hero, where I mastered the MERN stack. Over the last ${learningYears} years, I've evolved into a developer who loves building scalable, real-world solutions.`,
+      content: `My foundation in computing began at AIUB with C++ and Java, which sharpened my problem-solving core. However, my passion for the web led me to self-study HTML, CSS, and Tailwind. To bridge the gap to professional development, I completed a intensive program at Programming Hero, where I mastered the MERN stack. Over the last ${learningYears} years, I've evolved into a developer who loves building scalable, real-world solutions.`,
       items: [
         "Frontend-Focused Full-Stack Developer",
         "MERN Stack Developer",

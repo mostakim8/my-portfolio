@@ -284,7 +284,7 @@ const Navbar = () => {
               {/* Bottom Action Buttons */}
               <div className="flex flex-col gap-3 pt-6 border-t border-slate-800/80 mt-6">
                 <a
-                  href="/Resume/All_Mostakim_Full_Stack_Developer_Resume.pdf"
+                  href="/public/Resume/All_Mostakim.pdf"
                   download="Mostakim_Resume.pdf"
                   className="flex items-center justify-center gap-2 py-3 border border-slate-800 rounded-2xl text-xs font-bold uppercase tracking-wider text-slate-300 hover:text-white bg-slate-900/60 transition-colors"
                 >
